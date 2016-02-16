@@ -55,7 +55,7 @@ export default class Sidebar extends React.Component {
 
           {/* Header Menu */}
           <div className="team-name" onClick={this.handleTouchTap}>
-            <span>Team Name <i className="fa fa-fw fa-caret-down" /></span>
+            <span>The A Team <i className="fa fa-fw fa-caret-down" /></span>
           </div>
           <Popover
             open={this.state.open}
