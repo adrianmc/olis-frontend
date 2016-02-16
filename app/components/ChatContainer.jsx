@@ -8,6 +8,19 @@ import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
 import TextField from 'material-ui/lib/text-field';
 
 export default class ChatContainer extends React.Component {
+  componentDidMount() {
+    autosize(document.querySelectorAll('textarea'));
+  }
+
+  handleEnterKeyDown = (e) => {
+    if (e.shiftKey === true) {
+      console.log('shift-key has been pressed')
+    } else {
+      // e.preventDefault();
+      console.log('SUBMIT')
+    }
+  }
+
   render() {
     const inputStyle = {
       width: '100%'
@@ -47,6 +60,7 @@ export default class ChatContainer extends React.Component {
             rows={1}
             rowsMax={10}
             inputStyle={inputStyle}
+            onEnterKeyDown={this.handleEnterKeyDown}
           />
         </div>
       </div>
