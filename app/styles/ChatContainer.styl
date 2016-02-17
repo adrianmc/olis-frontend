@@ -1,9 +1,10 @@
 @import "application"
 
 header-height = 64px
-soft-blue = #B7D7F9
+soft-blue = #445BA2
 bubble-color = white
 bubble-color-me = soft-blue
+side-padding = 36px
 
 #chat-container
   width 100%
@@ -31,13 +32,13 @@ bubble-color-me = soft-blue
       .chat-title
         margin-top 12px
         line-height 26px
-        font-size 24px
+        font-size 18px
         font-weight 700
       
       .chat-meta
-        margin-top 4px
+        // margin-top 4px
         line-height 14px
-        font-size 14px
+        font-size 12px
         color grey - 50%
     
     .header-icon
@@ -46,7 +47,7 @@ bubble-color-me = soft-blue
     
   #chat-msg-area
     flex-grow 1
-    padding 12px 12px 0
+    padding 24px side-padding 0
     overflow scroll
     // background green
     
@@ -80,7 +81,8 @@ bubble-color-me = soft-blue
   .chat-bubble
     border-radius 6px
     padding 8px
-    font-size 14px
+    font-size 13px
+    font-weight 300
     background bubble-color
     & > *
       margin 0
@@ -97,5 +99,6 @@ bubble-color-me = soft-blue
 
     .chat-bubble
       text-align left
+      color white
       background bubble-color-me
     

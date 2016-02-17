@@ -44,8 +44,8 @@ export default class Sidebar extends React.Component {
     };
     const iconColor = "white";
     const badgeStyle = {
-      top: '2px',
-      right: '4px',
+      top: '-6px',
+      right: '-6px',
       pointerEvents: 'none',
       // backgroundColor: 'blue', // change badge colour here
     };
@@ -97,7 +97,14 @@ export default class Sidebar extends React.Component {
         <div id="conversation-list">
           <div className="conversation-item">
             <div className="chat-avatar">
-              <Avatar size={51} src="http://www.placecage.com/200/200" />
+              <Badge
+                    badgeContent={12}
+                    primary={true}
+                    style={{padding:'0',display:'block'}}
+                    badgeStyle={badgeStyle}
+                  >
+                  <Avatar size={51} src="http://www.placecage.com/200/200" />
+                </Badge>
             </div>
             <div className="chat-body">
               <div className="chat-main">
@@ -108,21 +115,19 @@ export default class Sidebar extends React.Component {
                 <div className="chat-status">
                   Today's meeting minutes has been summarized into the notes on the side of this conversation.
                 </div>
-                <div className="chat-badge">
-                  <Badge
-                    badgeContent={12}
-                    primary={true}
-                    style={{padding:'0',display:'block'}}
-                    badgeStyle={badgeStyle}
-                  >
-                  </Badge>
-                </div>
               </div>
             </div>
           </div>
           <div className="conversation-item">
             <div className="chat-avatar">
-              <Avatar size={51} src="http://www.placecage.com/200/201" />
+              <Badge
+                    badgeContent={1}
+                    primary={true}
+                    style={{padding:'0',display:'block'}}
+                    badgeStyle={badgeStyle}
+                  >
+                <Avatar size={51} src="http://www.placecage.com/200/201" />
+              </Badge>
             </div>
             <div className="chat-body">
               <div className="chat-main">
@@ -132,15 +137,6 @@ export default class Sidebar extends React.Component {
               <div className="chat-secondary">
                 <div className="chat-status">
                   Does anyone know where we are going to meet? Please put it in the notes for this conversation.
-                </div>
-                <div className="chat-badge">
-                  <Badge
-                    badgeContent={1}
-                    primary={true}
-                    style={{padding:'0',display:'block'}}
-                    badgeStyle={badgeStyle}
-                  >
-                  </Badge>
                 </div>
               </div>
             </div>
