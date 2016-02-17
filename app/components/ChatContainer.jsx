@@ -39,7 +39,7 @@ export default class ChatContainer extends React.Component {
           <div className="header-icon">
             <IconMenu
               iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-              anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+              anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
               targetOrigin={{horizontal: 'right', vertical: 'top'}}
             >
               <MenuItem primaryText="Add user to conversation" />
@@ -51,6 +51,24 @@ export default class ChatContainer extends React.Component {
           </div>
         </div>
         <div id="chat-msg-area">
+          <h2>Chat messages will go here.</h2>
+          <h2>Chat messages will go here.</h2>
+          <h2>Chat messages will go here.</h2>
+          <h2>Chat messages will go here.</h2>
+          <h2>Chat messages will go here.</h2>
+          <h2>Chat messages will go here.</h2>
+          <h2>Chat messages will go here.</h2>
+          <h2>Chat messages will go here.</h2>
+          <h2>Chat messages will go here.</h2>
+          <h2>Chat messages will go here.</h2>
+          <h2>Chat messages will go here.</h2>
+          <h2>Chat messages will go here.</h2>
+          <h2>Chat messages will go here.</h2>
+          <h2>Chat messages will go here.</h2>
+          <h2>Chat messages will go here.</h2>
+          <h2>Chat messages will go here.</h2>
+          <h2>Chat messages will go here.</h2>
+          <h2>Chat messages will go here.</h2>
           <h2>Chat messages will go here.</h2>
         </div>
         <div id="chat-input">
