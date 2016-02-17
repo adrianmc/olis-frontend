@@ -162,16 +162,17 @@ export default class ChatContainer extends React.Component {
           </div>
         </div>
         <div id="chat-input">
+        <div className="chat-input-bubble">
           <TextField
+            
             hintText="Type your message here"
-            hintStyle={{color: '#ff4081'}}
             multiLine={true}
             rows={1}
             rowsMax={10}
-            style={{transition:'none', width: '90%', marginBottom: '12px'}}
-            underlineStyle={{borderColor: '#ff4081'}}
+            style={{transition:'none', width: '95%', margin: '8px'}}
             onEnterKeyDown={this.handleEnterKeyDown}
           />
+          </div>
         </div>
       </div>
     );
