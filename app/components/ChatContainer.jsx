@@ -169,9 +169,10 @@ export default class ChatContainer extends React.Component {
             multiLine={true}
             rows={1}
             rowsMax={10}
-            style={{transition:'none', width: '95%', margin: '8px'}}
+            style={{transition:'none', width: '90%', margin: '8px'}}
             onEnterKeyDown={this.handleEnterKeyDown}
           />
+          
           </div>
         </div>
       </div>
