@@ -168,7 +168,7 @@ export default class ChatContainer extends React.Component {
         </div>
         <div id="chat-input">
           <TextField
-            hintText="Enter your message here"
+            hintText="Type your message here"
             multiLine={true}
             rows={1}
             rowsMax={10}
