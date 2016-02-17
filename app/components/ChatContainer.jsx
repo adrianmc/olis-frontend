@@ -44,11 +44,9 @@ export default class ChatContainer extends React.Component {
               anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
               targetOrigin={{horizontal: 'right', vertical: 'top'}}
             >
-              <MenuItem primaryText="Add user to conversation" />
-              <MenuItem primaryText="Mute chat" />
-              <MenuItem primaryText="See all users" />
-              <MenuItem primaryText="See all links" />
-              <MenuItem primaryText="Something else" />
+              <MenuItem primaryText="Add people to chat" />
+              <MenuItem primaryText="Change chat title" />
+              <MenuItem primaryText="Chat info" />
             </IconMenu>
           </div>
         </div>
