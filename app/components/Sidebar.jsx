@@ -67,11 +67,9 @@ export default class Sidebar extends React.Component {
           >
             <Menu animated={false} >
               <MenuItem primaryText="Maps" />
-              <MenuItem primaryText="Books" />
-              <MenuItem primaryText="Flights" />
-              <MenuItem primaryText="Apps" />
-              <Divider />
-              <RaisedButton primary={true} label="Logout"/>
+              <MenuItem primaryText="Interesting option" />
+              <MenuItem primaryText="Lorem Ipsum" />
+              <MenuItem primaryText="Do something" />
             </Menu>
           </Popover>
 

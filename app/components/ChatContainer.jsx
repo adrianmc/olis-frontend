@@ -11,7 +11,7 @@ import TextField from 'material-ui/lib/text-field';
 
 export default class ChatContainer extends React.Component {
   componentDidMount() {
-    autosize(document.querySelectorAll('textarea'));
+    // autosize(document.querySelectorAll('textarea'));
   }
 
   handleEnterKeyDown = (e) => {
@@ -24,9 +24,6 @@ export default class ChatContainer extends React.Component {
   }
 
   render() {
-    const inputStyle = {
-      width: '100%'
-    };
     return (
       <div id="chat-container">
         <div id="chat-header">
@@ -167,10 +164,12 @@ export default class ChatContainer extends React.Component {
         <div id="chat-input">
           <TextField
             hintText="Type your message here"
+            hintStyle={{color: '#ff4081'}}
             multiLine={true}
             rows={1}
             rowsMax={10}
-            inputStyle={inputStyle}
+            style={{transition:'none', width: '90%', marginBottom: '12px'}}
+            underlineStyle={{borderColor: '#ff4081'}}
             onEnterKeyDown={this.handleEnterKeyDown}
           />
         </div>
