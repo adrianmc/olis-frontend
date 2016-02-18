@@ -60,14 +60,14 @@ export default class ChatContainer extends React.Component {
             timestamp='30 minutes ago'
           />
           <ChatMessageItem
-            authorName='Bill Murray'
+            authorName='Billy Murray'
             avatarSrc='http://www.fillmurray.com/201/201'
             content= "Hmmm"
             timestamp='23 minutes ago'
             selfAuthor
           />
           <ChatMessageItem
-            authorName='Bill Murray'
+            authorName='Billy Murray'
             avatarSrc='http://www.fillmurray.com/201/201'
             content= "Let me think about this."
             timestamp='15 minutes ago'
@@ -86,14 +86,14 @@ export default class ChatContainer extends React.Component {
             timestamp='5 minutes ago'
           />
           <ChatMessageItem
-            authorName='Bill Murray'
+            authorName='Billy Murray'
             avatarSrc='http://www.fillmurray.com/201/201'
             content= "That's a really good point!"
             timestamp='3 minutes ago'
             selfAuthor
           />
           <ChatMessageItem
-            authorName='Bill Murray'
+            authorName='Billy Murray'
             avatarSrc='http://www.fillmurray.com/201/201'
             content= "I have a longer sentence that I wanted to add. I hope that this will illustrate how line breaks look when I type something longer."
             timestamp='a few seconds ago'
