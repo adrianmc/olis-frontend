@@ -8,11 +8,9 @@ import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
 import Avatar from 'material-ui/lib/avatar';
 
 import TextField from 'material-ui/lib/text-field';
+import ChatMessageItem from './ChatMessageItem';
 
 export default class ChatContainer extends React.Component {
-  componentDidMount() {
-    // autosize(document.querySelectorAll('textarea'));
-  }
 
   handleEnterKeyDown = (e) => {
     if (e.shiftKey === true) {
@@ -47,124 +45,65 @@ export default class ChatContainer extends React.Component {
             </IconMenu>
           </div>
         </div>
+
         <div id="chat-msg-area">
-          <div className="chat-msg-item">
-            <div className="chat-author">Nicky Cage</div>
-            <div className="chat-primary">
-              <div className="chat-avatar">
-                <Avatar size={51} src="http://www.placecage.com/200/200" />
-              </div>
-              <div className="chat-body">
-                <div className="chat-bubble">
-                  <p>Form inputs offer a great opportunity to add some subtle and interesting effects to a web page.</p>
-                </div>
-                <div className="chat-timestamp">5 minutes ago</div>
-              </div>
-            </div>
-          </div>
-          <div className="chat-msg-item">
-            <div className="chat-author">Stevey Segal</div>
-            <div className="chat-primary">
-              <div className="chat-avatar">
-                <Avatar size={51} src="https://www.stevensegallery.com/200/201" />
-              </div>
-              <div className="chat-body">
-                <div className="chat-bubble">
-                  <p>They are elements that your user will interact with at some point and making them fun to use can enhance the experience.</p>
-                </div>
-                <div className="chat-timestamp">5 minutes ago</div>
-              </div>
-            </div>
-          </div>
-          <div className="chat-msg-item you">
-            <div className="chat-author">Billy Murry</div>
-            <div className="chat-primary">
-              <div className="chat-avatar">
-                <Avatar size={51} src="http://www.fillmurray.com/201/201" />
-              </div>
-              <div className="chat-body">
-                <div className="chat-bubble">
-                  <p>That's a really good point!</p>
-                </div>
-                <div className="chat-timestamp">5 minutes ago</div>
-              </div>
-            </div>
-          </div>
-          <div className="chat-msg-item you">
-            <div className="chat-author">Billy Murry</div>
-            <div className="chat-primary">
-              <div className="chat-avatar">
-                <Avatar size={51} src="http://www.fillmurray.com/201/201" />
-              </div>
-              <div className="chat-body">
-                <div className="chat-bubble">
-                  <p>I have a longer sentence that I wanted to add. I hope that this will illustrate how line breaks look when I type something longer.</p>
-                </div>
-                <div className="chat-timestamp">5 minutes ago</div>
-              </div>
-            </div>
-          </div>
-          <div className="chat-msg-item">
-            <div className="chat-author">Nicky Cage</div>
-            <div className="chat-primary">
-              <div className="chat-avatar">
-                <Avatar size={51} src="http://www.placecage.com/200/200" />
-              </div>
-              <div className="chat-body">
-                <div className="chat-bubble">
-                  <p>Form inputs offer a great opportunity to add some subtle and interesting effects to a web page.</p>
-                </div>
-                <div className="chat-timestamp">5 minutes ago</div>
-              </div>
-            </div>
-          </div>
-          <div className="chat-msg-item">
-            <div className="chat-author">Stevey Segal</div>
-            <div className="chat-primary">
-              <div className="chat-avatar">
-                <Avatar size={51} src="https://www.stevensegallery.com/200/201" />
-              </div>
-              <div className="chat-body">
-                <div className="chat-bubble">
-                  <p>They are elements that your user will interact with at some point and making them fun to use can enhance the experience.</p>
-                </div>
-                <div className="chat-timestamp">5 minutes ago</div>
-              </div>
-            </div>
-          </div>
-          <div className="chat-msg-item you">
-            <div className="chat-author">Billy Murry</div>
-            <div className="chat-primary">
-              <div className="chat-avatar">
-                <Avatar size={51} src="http://www.fillmurray.com/201/201" />
-              </div>
-              <div className="chat-body">
-                <div className="chat-bubble">
-                  <p>That's a really good point!</p>
-                </div>
-                <div className="chat-timestamp">5 minutes ago</div>
-              </div>
-            </div>
-          </div>
-          <div className="chat-msg-item you">
-            <div className="chat-author">Billy Murry</div>
-            <div className="chat-primary">
-              <div className="chat-avatar">
-                <Avatar size={51} src="http://www.fillmurray.com/201/201" />
-              </div>
-              <div className="chat-body">
-                <div className="chat-bubble">
-                  <p>I have a longer sentence that I wanted to add. I hope that this will illustrate how line breaks look when I type something longer.</p>
-                </div>
-                <div className="chat-timestamp">5 minutes ago</div>
-              </div>
-            </div>
-          </div>
+          <ChatMessageItem
+            authorName='Nicky Cage'
+            avatarSrc='http://www.placecage.com/200/200'
+            content='Hey there, I had a question to ask you, Bill.'
+            timestamp='an hour ago'
+          />
+          <ChatMessageItem
+            authorName='Nicky Cage'
+            avatarSrc='http://www.placecage.com/200/200'
+            content="So, I had a look at the draft and was thinking if you'd be okay with a few changes."
+            timestamp='30 minutes ago'
+          />
+          <ChatMessageItem
+            authorName='Bill Murray'
+            avatarSrc='http://www.fillmurray.com/201/201'
+            content= "Hmmm"
+            timestamp='23 minutes ago'
+            selfAuthor
+          />
+          <ChatMessageItem
+            authorName='Bill Murray'
+            avatarSrc='http://www.fillmurray.com/201/201'
+            content= "Let me think about this."
+            timestamp='15 minutes ago'
+            selfAuthor
+          />
+          <ChatMessageItem
+            authorName='Nicky Cage'
+            avatarSrc='http://www.placecage.com/200/200'
+            content='Form inputs offer a great opportunity to add some subtle and interesting effects to a web page.'
+            timestamp='10 minutes ago'
+          />
+          <ChatMessageItem
+            authorName='Stevey Segal'
+            avatarSrc='https://www.stevensegallery.com/200/201'
+            content='They are elements that your user will interact with at some point and making them fun to use can enhance the experience.'
+            timestamp='5 minutes ago'
+          />
+          <ChatMessageItem
+            authorName='Bill Murray'
+            avatarSrc='http://www.fillmurray.com/201/201'
+            content= "That's a really good point!"
+            timestamp='3 minutes ago'
+            selfAuthor
+          />
+          <ChatMessageItem
+            authorName='Bill Murray'
+            avatarSrc='http://www.fillmurray.com/201/201'
+            content= "I have a longer sentence that I wanted to add. I hope that this will illustrate how line breaks look when I type something longer."
+            timestamp='a few seconds ago'
+            selfAuthor
+          />
         </div>
+
         <div id="chat-input">
-        <div className="chat-input-bubble">
+        <div className="chat-input-container">
           <TextField
-            
             hintText="Type your message here"
             multiLine={true}
             rows={1}
@@ -172,7 +111,6 @@ export default class ChatContainer extends React.Component {
             style={{transition:'none', width: '90%', margin: '8px'}}
             onEnterKeyDown={this.handleEnterKeyDown}
           />
-          
           </div>
         </div>
       </div>

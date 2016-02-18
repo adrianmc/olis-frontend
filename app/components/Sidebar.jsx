@@ -12,9 +12,6 @@ import Menu from 'material-ui/lib/menus/menu';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import Divider from 'material-ui/lib/divider';
 
-import Avatar from 'material-ui/lib/avatar';
-import Badge from 'material-ui/lib/badge';
-
 import ConversationItem from './ConversationItem';
 
 export default class Sidebar extends React.Component {
@@ -45,12 +42,6 @@ export default class Sidebar extends React.Component {
       backgroundColor: '#2F3F70'
     };
     const iconColor = "white";
-    const badgeStyle = {
-      top: '-6px',
-      right: '-6px',
-      pointerEvents: 'none',
-      // backgroundColor: 'blue', // change badge colour here
-    };
     return (
       <div id="sidebar-container">
         <div id="sidebar-header">
@@ -95,149 +86,111 @@ export default class Sidebar extends React.Component {
 
         {/* Conversation List */}
         <div id="conversation-list">
-          <ConversationItem />
-          <div className="conversation-item unread">
-            <div className="chat-avatar">
-              <Badge
-                    badgeContent={12}
-                    primary={true}
-                    style={{padding:'0',display:'block'}}
-                    badgeStyle={badgeStyle}
-                  >
-                  <Avatar size={51} src="http://www.placecage.com/200/200" />
-                </Badge>
-            </div>
-            <div className="chat-body">
-              <div className="chat-main">
-                <div className="chat-title">Today's Meeting</div>
-                <div className="chat-time">32 minutes ago</div>
-              </div>
-              <div className="chat-secondary">
-                <div className="chat-status">
-                  Today's meeting minutes has been summarized into the notes on the side of this conversation.
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="conversation-item unread">
-            <div className="chat-avatar">
-              <Badge
-                    badgeContent={1}
-                    primary={true}
-                    style={{padding:'0',display:'block'}}
-                    badgeStyle={badgeStyle}
-                  >
-                <Avatar size={51} src="http://www.placecage.com/200/201" />
-              </Badge>
-            </div>
-            <div className="chat-body">
-              <div className="chat-main">
-                <div className="chat-title">Christmas Party</div>
-                <div className="chat-time">2 hours ago</div>
-              </div>
-              <div className="chat-secondary">
-                <div className="chat-status">
-                  Does anyone know where we are going to meet? Please put it in the notes for this conversation.
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="conversation-item active">
-            <div className="chat-avatar">
-              <Avatar size={51} src="http://www.placecage.com/201/200" />
-            </div>
-            <div className="chat-body">
-              <div className="chat-main">
-                <div className="chat-title">Q4 Sales Report</div>
-                <div className="chat-time">Yesterday</div>
-              </div>
-              <div className="chat-secondary">
-                <div className="chat-status">
-                  This was a very difficult report, we're going to need all hands on deck for this one.
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="conversation-item">
-            <div className="chat-avatar">
-              <Avatar size={51} src="http://www.placecage.com/199/200" />
-            </div>
-            <div className="chat-body">
-              <div className="chat-main">
-                <div className="chat-title">Maintenance Work This Weekend</div>
-                <div className="chat-time">2 days ago</div>
-              </div>
-              <div className="chat-secondary">
-                <div className="chat-status">
-                  Make sure not to get locked in if you're working over time!
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="conversation-item">
-            <div className="chat-avatar">
-              <Avatar size={51} src="http://www.placecage.com/199/198" />
-            </div>
-            <div className="chat-body">
-              <div className="chat-main">
-                <div className="chat-title">Lunch?</div>
-                <div className="chat-time">3 days ago</div>
-              </div>
-              <div className="chat-secondary">
-                <div className="chat-status">
-                  Anyone up for lunch?
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="conversation-item">
-            <div className="chat-avatar">
-              <Avatar size={51} src="http://www.placecage.com/201/198" />
-            </div>
-            <div className="chat-body">
-              <div className="chat-main">
-                <div className="chat-title">Need Water</div>
-                <div className="chat-time">5 days ago</div>
-              </div>
-              <div className="chat-secondary">
-                <div className="chat-status">
-                  Water cooler's running low, can someone fetch Emma to make the order?
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="conversation-item">
-            <div className="chat-avatar">
-              <Avatar size={51} src="http://www.fillmurray.com/200/200" />
-            </div>
-            <div className="chat-body">
-              <div className="chat-main">
-                <div className="chat-title">New Hire: Bill</div>
-                <div className="chat-time">Last week</div>
-              </div>
-              <div className="chat-secondary">
-                <div className="chat-status">
-                  Everyone let's welcome Mr. Murray!
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="conversation-item">
-            <div className="chat-avatar">
-              <Avatar size={51} src="http://www.stevensegallery.com/200/200" />
-            </div>
-            <div className="chat-body">
-              <div className="chat-main">
-                <div className="chat-title">Stephen: Please keep quiet</div>
-                <div className="chat-time">Last week</div>
-              </div>
-              <div className="chat-secondary">
-                <div className="chat-status">
-                  It's getting a little too noisy over there!
-                </div>
-              </div>
-            </div>
-          </div>
+          <ConversationItem
+              title='Chat Title'
+              timeString='34 minutes ago'
+              previewText="Today's meeting minutes has been summarized into the notes on the side of this conversation."
+              avatarSrc='http://www.placecage.com/200/200'
+              unread={true}
+              unreadCount={12}
+          />
+          <ConversationItem
+              title='Christmas Party'
+              timeString='2 hours ago'
+              previewText="Does anyone know where we are going to meet? Please put it in the notes for this conversation."
+              avatarSrc='http://www.placecage.com/200/201'
+              unread={true}
+              unreadCount={2}
+          />
+          <ConversationItem
+              title='Q4 Sales Report'
+              timeString='Yesterday'
+              previewText="This was a very difficult report, we're going to need all hands on deck for this one."
+              avatarSrc='http://www.placecage.com/201/200'
+              active
+          />
+          <ConversationItem
+              title='Maintenance Work This Weekend'
+              timeString='2 days ago'
+              previewText="Make sure not to get locked in if you're working over time!"
+              avatarSrc='http://www.placecage.com/199/200'
+          />
+          <ConversationItem
+              title='Lunch?'
+              timeString='3 days ago'
+              previewText="Anyone up for lunch?"
+              avatarSrc='http://www.placecage.com/199/198'
+          />
+          <ConversationItem
+              title='Need water!'
+              timeString='5 days ago'
+              previewText="Water cooler's running low, can someone fetch Emma to make the order?"
+              avatarSrc='http://www.placecage.com/201/198'
+          />
+          <ConversationItem
+              title='New Hire: Bill'
+              timeString='last week'
+              previewText="Everyone let's welcome Mr. Murray!"
+              avatarSrc='http://www.fillmurray.com/200/200'
+          />
+          <ConversationItem
+              title='Stephen: Please keep quiet'
+              timeString='last week'
+              previewText="It's getting too noisy in here!"
+              avatarSrc='http://www.fillmurray.com/210/209'
+          />
+          <ConversationItem
+              title='Chat Title'
+              timeString='last week'
+              previewText="Today's meeting minutes has been summarized into the notes on the side of this conversation."
+              avatarSrc='http://www.placecage.com/200/205'
+              unread={true}
+              unreadCount={12}
+          />
+          <ConversationItem
+              title='Christmas Party'
+              timeString='last week'
+              previewText="Does anyone know where we are going to meet? Please put it in the notes for this conversation."
+              avatarSrc='http://www.placecage.com/200/201'
+              unread={true}
+              unreadCount={2}
+          />
+          <ConversationItem
+              title='Q4 Sales Report'
+              timeString='last week'
+              previewText="This was a very difficult report, we're going to need all hands on deck for this one."
+              avatarSrc='http://www.placecage.com/201/200'
+          />
+          <ConversationItem
+              title='Maintenance Work This Weekend'
+              timeString='last week'
+              previewText="Make sure not to get locked in if you're working over time!"
+              avatarSrc='http://www.placecage.com/199/200'
+          />
+          <ConversationItem
+              title='Lunch?'
+              timeString='last week'
+              previewText="Anyone up for lunch?"
+              avatarSrc='http://www.placecage.com/199/198'
+          />
+          <ConversationItem
+              title='Need water!'
+              timeString='last week'
+              previewText="Water cooler's running low, can someone fetch Emma to make the order?"
+              avatarSrc='http://www.placecage.com/201/198'
+          />
+          <ConversationItem
+              title='New Hire: Bill'
+              timeString='2 weeks ago'
+              previewText="Everyone let's welcome Mr. Murray!"
+              avatarSrc='http://www.fillmurray.com/200/200'
+          />
+          <ConversationItem
+              title='Stephen: Please keep quiet'
+              timeString='3 weeks ago'
+              previewText="It's getting too noisy in here!"
+              avatarSrc='http://www.fillmurray.com/204/200'
+          />
         </div>
       </div>
     );

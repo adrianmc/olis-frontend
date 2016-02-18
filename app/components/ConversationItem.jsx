@@ -21,6 +21,7 @@ export default class ConversationItem extends React.Component {
       top: '-6px',
       right: '-6px',
       pointerEvents: 'none',
+      transform: 'scale(0.8)',
       // backgroundColor: 'blue', // badge color
     };
     const unreadClass = unread ? ' unread' : '';
@@ -60,7 +61,7 @@ ConversationItem.defaultProps = {
   timeString: '34 minutes ago',
   previewText: "Today's meeting minutes has been summarized into the notes on the side of this conversation.",
   avatarSrc: 'http://www.placecage.com/200/200',
-  unread: true,
-  unreadCount: 12,
+  unread: false,
+  unreadCount: 2,
   active: false,
 };
