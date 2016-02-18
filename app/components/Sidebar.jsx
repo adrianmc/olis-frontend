@@ -15,6 +15,8 @@ import Divider from 'material-ui/lib/divider';
 import Avatar from 'material-ui/lib/avatar';
 import Badge from 'material-ui/lib/badge';
 
+import ConversationItem from './ConversationItem';
+
 export default class Sidebar extends React.Component {
 
   constructor(props) {
@@ -62,10 +64,10 @@ export default class Sidebar extends React.Component {
             anchorEl={this.state.anchorEl}
             anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
             targetOrigin={{horizontal: 'left', vertical: 'top'}}
-            onRequestClose={this.handleRequestClose}
-            
+            useLayerForClickAway={false}
+            onRequestClose={this.handleRequestClose} 
           >
-            <Menu animated={false} >
+            <Menu style={{position:'relative'}} zDepth={0}>
               <MenuItem primaryText="Maps" />
               <MenuItem primaryText="Interesting option" />
               <MenuItem primaryText="Lorem Ipsum" />
@@ -93,7 +95,8 @@ export default class Sidebar extends React.Component {
 
         {/* Conversation List */}
         <div id="conversation-list">
-          <div className="conversation-item">
+          <ConversationItem />
+          <div className="conversation-item unread">
             <div className="chat-avatar">
               <Badge
                     badgeContent={12}
@@ -116,7 +119,7 @@ export default class Sidebar extends React.Component {
               </div>
             </div>
           </div>
-          <div className="conversation-item">
+          <div className="conversation-item unread">
             <div className="chat-avatar">
               <Badge
                     badgeContent={1}

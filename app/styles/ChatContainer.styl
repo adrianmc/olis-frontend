@@ -26,7 +26,7 @@ side-padding = 36px
     display -webkit-flex
     z-index 1
     background grey
-    // border-bottom 1px solid #ff4081
+    border-bottom 1px solid rgba(0,0,0,0.08)
     // box-shadow 0 2px 6px rgba(0,0,0,0.12), 0 2px 4px rgba(0,0,0,0.12)
     // background red
     
@@ -59,6 +59,7 @@ side-padding = 36px
     flex-shrink 0
     z-index 1
     background grey
+    border-top 1px solid rgba(0,0,0,0.08)
     // box-shadow 0 -2px 6px rgba(0,0,0,0.12), 0 -2px 4px rgba(0,0,0,0.12)
     display flex
     display -webkit-flex
@@ -102,6 +103,7 @@ side-padding = 36px
     margin-top 8px
     display flex
     display -webkit-flex
+    position relative
     // background green
   .chat-avatar
     padding 0 6px 6px
@@ -115,6 +117,17 @@ side-padding = 36px
     background bubble-color
     & > *
       margin 0
+    &:after
+      content ''
+      position absolute
+      top 0
+      left 52px
+      width 0
+      height 0
+      border-style solid
+      border-width 0 16px 16px 0
+      border-color transparent white transparent transparent
+
   .chat-timestamp
     font-size 12px
     margin-top 6px
@@ -130,4 +143,14 @@ side-padding = 36px
       text-align left
       color white
       background bubble-color-me
-    
+      &:after
+        content ''
+        position absolute
+        top 0
+        right 52px
+        left auto
+        width 0
+        height 0
+        border-style solid
+        border-width 16px 16px 0 0
+        border-color bubble-color-me transparent transparent transparent
