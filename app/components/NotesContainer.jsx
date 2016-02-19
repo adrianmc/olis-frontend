@@ -9,6 +9,7 @@ import IconButton from 'material-ui/lib/icon-button';
 import MediumEditor from 'react-medium-editor/lib/editor';
 
 export default class NotesContainer extends React.Component {
+  
   handleChange = (text, medium) => {
     console.log('Content Has Changed')
     console.log(text)
