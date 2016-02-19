@@ -1,87 +1,22 @@
 import React from 'react';
-import IconButton from 'material-ui/lib/icon-button';
-import ActionQuestionAnswer from 'material-ui/lib/svg-icons/action/question-answer';
-import ActionSearch from 'material-ui/lib/svg-icons/action/search';
-import SocialNotifications from 'material-ui/lib/svg-icons/social/notifications';
 
-import Popover from 'material-ui/lib/popover/popover';
-import PopoverAnimationFromTop from 'material-ui/lib/popover/popover-animation-from-top';
-import RaisedButton from 'material-ui/lib/raised-button';
-
-import Menu from 'material-ui/lib/menus/menu';
-import MenuItem from 'material-ui/lib/menus/menu-item';
-import Divider from 'material-ui/lib/divider';
+import HeaderMenu from './HeaderMenu';
+import HeaderNewConversation from './HeaderNewConversation';
+import HeaderSearch from './HeaderSearch';
+import HeaderNotifications from './HeaderNotifications';
 
 import ConversationItem from './ConversationItem';
 
 export default class Sidebar extends React.Component {
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      open: false,
-    };
-  }
-
-  handleTouchTap = (event) => {
-    this.setState({
-      open: true,
-      anchorEl: event.currentTarget,
-    });
-  };
-
-  handleRequestClose = () => {
-    this.setState({
-      open: false,
-    });
-  };
-
   render() {
-    const headerBarStyle = {
-      backgroundColor: '#2F3F70'
-    };
-    const iconColor = "white";
     return (
       <div id="sidebar-container">
         <div id="sidebar-header">
-
-          {/* Header Menu */}
-          <div className="team-name" onClick={this.handleTouchTap}>
-            <span>The A Team <i className="fa fa-fw fa-caret-down" /></span>
-          </div>
-          <Popover
-            open={this.state.open}
-            anchorEl={this.state.anchorEl}
-            anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-            targetOrigin={{horizontal: 'left', vertical: 'top'}}
-            useLayerForClickAway={false}
-            onRequestClose={this.handleRequestClose} 
-          >
-            <Menu style={{position:'relative'}} zDepth={0}>
-              <MenuItem primaryText="Maps" />
-              <MenuItem primaryText="Interesting option" />
-              <MenuItem primaryText="Lorem Ipsum" />
-              <MenuItem primaryText="Do something" />
-            </Menu>
-          </Popover>
-
-          {/* Header Icons */}
-          <div className="header-icon">
-            <IconButton tooltip="New Conversation">
-              <ActionQuestionAnswer color={iconColor} />
-            </IconButton>
-          </div>
-          <div className="header-icon">
-            <IconButton tooltip="Search">
-              <ActionSearch color={iconColor} />
-            </IconButton>
-          </div>
-          <div className="header-icon">
-            <IconButton tooltip="Notifications">
-              <SocialNotifications color={iconColor} />
-            </IconButton>
-          </div>
+          <HeaderMenu />
+          <HeaderNewConversation />
+          <HeaderSearch />
+          <HeaderNotifications />
         </div>
 
         {/* Conversation List */}

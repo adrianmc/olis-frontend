@@ -4,6 +4,12 @@ import Avatar from 'material-ui/lib/avatar';
 import Badge from 'material-ui/lib/badge';
 
 export default class ConversationItem extends React.Component {
+  handleClick = (e) => {
+    console.log('User has clicked conversation: ' + this.props.title);
+    // TODO - make sure the conversation ID is passed into this component
+    // TODO - fire an action to reflect the fact that user wants 
+    //        to switch to that conversation ID
+  }
 
   render() {
 
@@ -27,7 +33,10 @@ export default class ConversationItem extends React.Component {
     const unreadClass = unread ? ' unread' : '';
     const activeClass = active ? ' active' : '';
     return (
-      <div className={'conversation-item' + unreadClass + activeClass}>
+      <div 
+        className={'conversation-item' + unreadClass + activeClass}
+        onClick={this.handleClick}
+      >
         <div className="chat-avatar">
           { unread ?
           <Badge

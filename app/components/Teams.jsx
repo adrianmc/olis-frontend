@@ -1,9 +1,31 @@
 import React from 'react';
 import IconButton from 'material-ui/lib/icon-button';
-import FontIcon from 'material-ui/lib/font-icon';
-import Badge from 'material-ui/lib/badge';
+import TeamIcon from './TeamIcon';
+
+import Dialog from 'material-ui/lib/dialog';
+import FlatButton from 'material-ui/lib/flat-button';
 
 export default class Teams extends React.Component {
+  
+  constructor(props) {
+    super(props);
+    this.state = {
+      addTeamDialogOpen: false,
+    };
+  }
+
+  handleOpen = () => {
+    this.setState({addTeamDialogOpen: true});
+  }
+
+  handleClose = () => {
+    this.setState({addTeamDialogOpen: false});
+  }
+
+  handleManageTeams = () => {
+    alert('route users to the team management page');
+  }
+  
   render() {
     const bgColor = "#253256";
     const addTeamIconStyle = {
@@ -14,7 +36,7 @@ export default class Teams extends React.Component {
       left: '50%',
       transform: 'translate(-50%,-50%)',
     };
-    const settingsIconStyle = {
+    const manageTeamsIconStyle = {
       fontSize:'36px',
       color: 'white',
       position: 'absolute',
@@ -22,58 +44,88 @@ export default class Teams extends React.Component {
       left: '50%',
       transform: 'translate(-50%,-50%)',
     };
-    const badgeStyle = {
-      top: '-5px',
-      right: '-5px',
-      pointerEvents: 'none',
-      // backgroundColor: 'blue', // change badge colour here
-    };
+
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        secondary={true}
+        onTouchTap={this.handleClose}
+      />,
+      <FlatButton
+        label="Submit"
+        primary={true}
+        disabled={true}
+        onTouchTap={this.handleClose}
+      />,
+    ];
     return (
-      <div id="team-list">
+      <div id="team-list-wrapper">
 
-        {/* Active Team Button */}
-        <div className="team-item active">
-          <img src="https://s3.amazonaws.com/uifaces/faces/twitter/iflendra/128.jpg" alt=""/>
-        </div>
-        
-        {/* Regular Team Button */}
-        <div className="team-item">
-          <img src="https://s3.amazonaws.com/uifaces/faces/twitter/vladabazhan/128.jpg" alt=""/>
-        </div>
-        
-        {/* A Team Button w/ a Notification Badge */}
-        <Badge
-          badgeContent={4}
-          primary={true}
-          style={{padding:'0',display:'block'}}
-          badgeStyle={badgeStyle}
-        >
-          <div className="team-item">
-            <img src="https://s3.amazonaws.com/uifaces/faces/twitter/getsocial_now/128.jpg" alt=""/>
+        <div id="team-list">
+
+          {/* Team Icons */}
+          <TeamIcon
+            teamName="The A Team"
+            iconSrc='https://s3.amazonaws.com/uifaces/faces/twitter/vladabazhan/128.jpg'
+            unreadCount={15}
+            unread
+            active
+          />
+          <TeamIcon/>
+          <TeamIcon
+            teamName="Custom Team Name"
+            iconSrc='https://s3.amazonaws.com/uifaces/faces/twitter/eduardo_olv/128.jpg'
+            unreadCount={4}
+            unread
+          />
+          
+          {/* Add Team Button */}
+          <div className="team-item add-team">
+            <IconButton
+              onClick={this.handleOpen}
+              iconClassName="material-icons"
+              tooltip="Add team"
+              tooltipPosition="top-right"
+              tooltipStyles={{
+                top: '28px',
+                left: '56px',
+              }}
+              iconStyle={addTeamIconStyle}
+              style={{zIndex:'1'}}
+            >
+              add
+            </IconButton>
           </div>
-        </Badge>
 
-        {/* Two Buttons That Always Persist */}
-        <div className="team-item add-team">
-          <IconButton
-            iconClassName="material-icons"
-            tooltip="Add team"
-            tooltipPosition="top-center"
-            iconStyle={addTeamIconStyle}
-          >
-            add
-          </IconButton>
         </div>
-        <div className="team-item team-settings no-box">
+
+        {/* Manage Teams Button */}
+        <div className="team-item manage-teams no-box">
           <IconButton
+            onClick={this.handleManageTeams}
             iconClassName="material-icons"
             tooltip="Manage your teams"
             tooltipPosition="top-right"
-            iconStyle={settingsIconStyle}
+            tooltipStyles={{
+              top: '28px',
+              left: '56px',
+            }}
+            iconStyle={manageTeamsIconStyle}
+            style={{zIndex:'1'}}
           >
             settings
           </IconButton>
         </div>
+
+        {/* Add Team Dialog/Modal */}
+        <Dialog
+          title="Add Team"
+          actions={actions}
+          open={this.state.addTeamDialogOpen}
+          onRequestClose={this.handleClose}
+        >
+          Ask user if they want to join an existing team or create a new one.
+        </Dialog>
       </div>
     );
   }
