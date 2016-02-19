@@ -2,7 +2,12 @@ import React from 'react';
 
 import IconButton from 'material-ui/lib/icon-button';
 import ActionQuestionAnswer from 'material-ui/lib/svg-icons/action/question-answer';
-import Popover from 'material-ui/lib/popover/popover';
+// import Popover from 'material-ui/lib/popover/popover';
+
+import Dialog from 'material-ui/lib/dialog';
+import FlatButton from 'material-ui/lib/flat-button';
+
+import TextField from 'material-ui/lib/text-field';
 
 export default class HeaderNewConversation extends React.Component {
 
@@ -26,6 +31,19 @@ export default class HeaderNewConversation extends React.Component {
 
   render() {
     const iconColor = 'white';
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        secondary={true}
+        onTouchTap={this.handleClose}
+      />,
+      <FlatButton
+        label="Submit"
+        primary={true}
+        keyboardFocused={true}
+        onTouchTap={this.handleClose}
+      />,
+    ];
     return (
       <div>
         
@@ -38,17 +56,34 @@ export default class HeaderNewConversation extends React.Component {
           </IconButton>
         </div>
 
-        <Popover
+        <Dialog
+          title="New Conversation"
+          actions={actions}
+          modal={false}
           open={this.state.open}
-          anchorEl={this.state.anchorEl}
-          anchorOrigin={{horizontal: 'middle', vertical: 'bottom'}}
-          targetOrigin={{horizontal: 'middle', vertical: 'top'}}
-          useLayerForClickAway={false}
-          onRequestClose={this.handleClose} 
+          onRequestClose={this.handleClose}
         >
-          <h1>New Convo Stuff Here</h1>
-        </Popover>
+          Select who you would like to add to this new conversation.
+          <div>
+            <TextField
+              hintText="Hint Text"
+              floatingLabelText="Floating Label Text"
+            />
+          </div>
+        </Dialog>
+
       </div>
     );
   }
 }
+
+// <Popover
+//   open={this.state.open}
+//   anchorEl={this.state.anchorEl}
+//   anchorOrigin={{horizontal: 'middle', vertical: 'bottom'}}
+//   targetOrigin={{horizontal: 'middle', vertical: 'top'}}
+//   useLayerForClickAway={false}
+//   onRequestClose={this.handleClose} 
+// >
+//   <h1>New Convo Stuff Here</h1>
+// </Popover>

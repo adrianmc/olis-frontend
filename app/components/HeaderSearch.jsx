@@ -6,6 +6,9 @@ import RaisedButton from 'material-ui/lib/raised-button';
 import Dialog from 'material-ui/lib/dialog';
 import FlatButton from 'material-ui/lib/flat-button';
 
+import TextField from 'material-ui/lib/text-field';
+import CircularProgress from 'material-ui/lib/circular-progress';
+
 export default class HeaderSearch extends React.Component {
 
   constructor(props) {
@@ -55,6 +58,15 @@ export default class HeaderSearch extends React.Component {
           onRequestClose={this.handleClose}
         >
           This is where the user will do some searching.
+          <div>
+            <TextField
+              hintText="Hint Text"
+              floatingLabelText="Floating Label Text"
+            />
+          </div>
+          <div>
+            <CircularProgress />
+          </div>
         </Dialog>
 
       </div>

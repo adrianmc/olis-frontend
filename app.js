@@ -6604,6 +6604,281 @@ exports.default = FlatButtonLabel;
 module.exports = exports['default'];
     })(exports,require,module);
   });
+require.register('material-ui/lib/circular-progress', function(exports,req,module){
+    var require = __makeRequire((req), {});
+    (function(exports,require,module) {
+      'use strict';
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _stylePropable = require('./mixins/style-propable');
+
+var _stylePropable2 = _interopRequireDefault(_stylePropable);
+
+var _autoPrefix = require('./styles/auto-prefix');
+
+var _autoPrefix2 = _interopRequireDefault(_autoPrefix);
+
+var _transitions = require('./styles/transitions');
+
+var _transitions2 = _interopRequireDefault(_transitions);
+
+var _getMuiTheme = require('./styles/getMuiTheme');
+
+var _getMuiTheme2 = _interopRequireDefault(_getMuiTheme);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+var CircularProgress = _react2.default.createClass({
+  displayName: 'CircularProgress',
+
+  propTypes: {
+    /**
+     * Override the progress's color.
+     */
+    color: _react2.default.PropTypes.string,
+
+    /**
+     * Style for inner wrapper div.
+     */
+    innerStyle: _react2.default.PropTypes.object,
+
+    /**
+     * The max value of progress, only works in determinate mode.
+     */
+    max: _react2.default.PropTypes.number,
+
+    /**
+     * The min value of progress, only works in determinate mode.
+     */
+    min: _react2.default.PropTypes.number,
+
+    /**
+     * The mode of show your progress, indeterminate
+     * for when there is no value for progress.
+     */
+    mode: _react2.default.PropTypes.oneOf(['determinate', 'indeterminate']),
+
+    /**
+     * The size of the progress.
+     */
+    size: _react2.default.PropTypes.number,
+
+    /**
+     * Override the inline-styles of the root element.
+     */
+    style: _react2.default.PropTypes.object,
+
+    /**
+     * The value of progress, only works in determinate mode.
+     */
+    value: _react2.default.PropTypes.number
+  },
+
+  contextTypes: {
+    muiTheme: _react2.default.PropTypes.object
+  },
+
+  //for passing default theme context to children
+  childContextTypes: {
+    muiTheme: _react2.default.PropTypes.object
+  },
+
+  mixins: [_stylePropable2.default],
+
+  getDefaultProps: function getDefaultProps() {
+    return {
+      mode: 'indeterminate',
+      value: 0,
+      min: 0,
+      max: 100,
+      size: 1
+    };
+  },
+  getInitialState: function getInitialState() {
+    return {
+      muiTheme: this.context.muiTheme || (0, _getMuiTheme2.default)()
+    };
+  },
+  getChildContext: function getChildContext() {
+    return {
+      muiTheme: this.state.muiTheme
+    };
+  },
+  componentDidMount: function componentDidMount() {
+    var wrapper = _reactDom2.default.findDOMNode(this.refs.wrapper);
+    var path = _reactDom2.default.findDOMNode(this.refs.path);
+
+    this._scalePath(path);
+    this._rotateWrapper(wrapper);
+  },
+
+  //to update theme inside state whenever a new theme is passed down
+  //from the parent / owner using context
+  componentWillReceiveProps: function componentWillReceiveProps(nextProps, nextContext) {
+    var newMuiTheme = nextContext.muiTheme ? nextContext.muiTheme : this.state.muiTheme;
+    this.setState({ muiTheme: newMuiTheme });
+  },
+  componentWillUnmount: function componentWillUnmount() {
+    clearTimeout(this.scalePathTimer);
+    clearTimeout(this.rotateWrapperTimer);
+  },
+  _getRelativeValue: function _getRelativeValue() {
+    var value = this.props.value;
+    var min = this.props.min;
+    var max = this.props.max;
+
+    var clampedValue = Math.min(Math.max(min, value), max);
+    var rangeValue = max - min;
+    var relValue = Math.round(clampedValue / rangeValue * 10000) / 10000;
+    return relValue * 100;
+  },
+
+  scalePathTimer: undefined,
+  rotateWrapperTimer: undefined,
+
+  _scalePath: function _scalePath(path, step) {
+    var _this = this;
+
+    if (this.props.mode !== 'indeterminate') return;
+
+    step = step || 0;
+    step %= 3;
+
+    if (step === 0) {
+      path.style.strokeDasharray = '1, 200';
+      path.style.strokeDashoffset = 0;
+      path.style.transitionDuration = '0ms';
+    } else if (step === 1) {
+      path.style.strokeDasharray = '89, 200';
+      path.style.strokeDashoffset = -35;
+      path.style.transitionDuration = '750ms';
+    } else {
+      path.style.strokeDasharray = '89,200';
+      path.style.strokeDashoffset = -124;
+      path.style.transitionDuration = '850ms';
+    }
+
+    this.scalePathTimer = setTimeout(function () {
+      return _this._scalePath(path, step + 1);
+    }, step ? 750 : 250);
+  },
+  _rotateWrapper: function _rotateWrapper(wrapper) {
+    var _this2 = this;
+
+    if (this.props.mode !== 'indeterminate') return;
+
+    _autoPrefix2.default.set(wrapper.style, 'transform', 'rotate(0deg)', this.state.muiTheme);
+    _autoPrefix2.default.set(wrapper.style, 'transitionDuration', '0ms', this.state.muiTheme);
+
+    setTimeout(function () {
+      _autoPrefix2.default.set(wrapper.style, 'transform', 'rotate(1800deg)', _this2.state.muiTheme);
+      _autoPrefix2.default.set(wrapper.style, 'transitionDuration', '10s', _this2.state.muiTheme);
+      _autoPrefix2.default.set(wrapper.style, 'transitionTimingFunction', 'linear', _this2.state.muiTheme);
+    }, 50);
+
+    this.rotateWrapperTimer = setTimeout(function () {
+      return _this2._rotateWrapper(wrapper);
+    }, 10050);
+  },
+  getTheme: function getTheme() {
+    return this.state.muiTheme.rawTheme.palette;
+  },
+  getStyles: function getStyles(zoom) {
+    zoom *= 1.4;
+    var size = '50px';
+
+    var margin = Math.round((50 * zoom - 50) / 2);
+
+    if (margin < 0) margin = 0;
+
+    var styles = {
+      root: {
+        position: 'relative',
+        margin: margin + 'px',
+        display: 'inline-block',
+        width: size,
+        height: size
+      },
+      wrapper: {
+        width: size,
+        height: size,
+        display: 'inline-block',
+        transition: _transitions2.default.create('transform', '20s', null, 'linear')
+      },
+      svg: {
+        height: size,
+        position: 'relative',
+        transform: 'scale(' + zoom + ')',
+        width: size
+      },
+      path: {
+        strokeDasharray: '89,200',
+        strokeDashoffset: 0,
+        stroke: this.props.color || this.getTheme().primary1Color,
+        strokeLinecap: 'round',
+        transition: _transitions2.default.create('all', '1.5s', null, 'ease-in-out')
+      }
+    };
+
+    _autoPrefix2.default.set(styles.wrapper, 'transitionTimingFunction', 'linear', this.state.muiTheme);
+
+    if (this.props.mode === 'determinate') {
+      var relVal = this._getRelativeValue();
+      styles.path.transition = _transitions2.default.create('all', '0.3s', null, 'linear');
+      styles.path.strokeDasharray = Math.round(relVal * 1.25) + ',200';
+    }
+
+    return styles;
+  },
+  render: function render() {
+    var _props = this.props;
+    var style = _props.style;
+    var innerStyle = _props.innerStyle;
+    var size = _props.size;
+
+    var other = _objectWithoutProperties(_props, ['style', 'innerStyle', 'size']);
+
+    var styles = this.getStyles(size || 1);
+
+    return _react2.default.createElement(
+      'div',
+      _extends({}, other, { style: this.prepareStyles(styles.root, style) }),
+      _react2.default.createElement(
+        'div',
+        { ref: 'wrapper', style: this.prepareStyles(styles.wrapper, innerStyle) },
+        _react2.default.createElement(
+          'svg',
+          { style: this.prepareStyles(styles.svg) },
+          _react2.default.createElement('circle', {
+            ref: 'path', style: this.prepareStyles(styles.path), cx: '25',
+            cy: '25', r: '20', fill: 'none',
+            strokeWidth: '2.5', strokeMiterlimit: '10'
+          })
+        )
+      )
+    );
+  }
+});
+
+exports.default = CircularProgress;
+module.exports = exports['default'];
+    })(exports,require,module);
+  });
 require.register('material-ui/lib/dialog', function(exports,req,module){
     var require = __makeRequire((req), {});
     (function(exports,require,module) {
@@ -14558,6 +14833,170 @@ exports.default = SvgIcon;
 module.exports = exports['default'];
     })(exports,require,module);
   });
+require.register('material-ui/lib/svg-icons/action/exit-to-app', function(exports,req,module){
+    var require = __makeRequire((req), {});
+    (function(exports,require,module) {
+      'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactAddonsPureRenderMixin = require('react-addons-pure-render-mixin');
+
+var _reactAddonsPureRenderMixin2 = _interopRequireDefault(_reactAddonsPureRenderMixin);
+
+var _svgIcon = require('../../svg-icon');
+
+var _svgIcon2 = _interopRequireDefault(_svgIcon);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ActionExitToApp = _react2.default.createClass({
+  displayName: 'ActionExitToApp',
+
+  mixins: [_reactAddonsPureRenderMixin2.default],
+
+  render: function render() {
+    return _react2.default.createElement(
+      _svgIcon2.default,
+      this.props,
+      _react2.default.createElement('path', { d: 'M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z' })
+    );
+  }
+});
+
+exports.default = ActionExitToApp;
+module.exports = exports['default'];
+    })(exports,require,module);
+  });
+require.register('material-ui/lib/svg-icons/action/info', function(exports,req,module){
+    var require = __makeRequire((req), {});
+    (function(exports,require,module) {
+      'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactAddonsPureRenderMixin = require('react-addons-pure-render-mixin');
+
+var _reactAddonsPureRenderMixin2 = _interopRequireDefault(_reactAddonsPureRenderMixin);
+
+var _svgIcon = require('../../svg-icon');
+
+var _svgIcon2 = _interopRequireDefault(_svgIcon);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ActionInfo = _react2.default.createClass({
+  displayName: 'ActionInfo',
+
+  mixins: [_reactAddonsPureRenderMixin2.default],
+
+  render: function render() {
+    return _react2.default.createElement(
+      _svgIcon2.default,
+      this.props,
+      _react2.default.createElement('path', { d: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z' })
+    );
+  }
+});
+
+exports.default = ActionInfo;
+module.exports = exports['default'];
+    })(exports,require,module);
+  });
+require.register('material-ui/lib/svg-icons/action/list', function(exports,req,module){
+    var require = __makeRequire((req), {});
+    (function(exports,require,module) {
+      'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactAddonsPureRenderMixin = require('react-addons-pure-render-mixin');
+
+var _reactAddonsPureRenderMixin2 = _interopRequireDefault(_reactAddonsPureRenderMixin);
+
+var _svgIcon = require('../../svg-icon');
+
+var _svgIcon2 = _interopRequireDefault(_svgIcon);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ActionList = _react2.default.createClass({
+  displayName: 'ActionList',
+
+  mixins: [_reactAddonsPureRenderMixin2.default],
+
+  render: function render() {
+    return _react2.default.createElement(
+      _svgIcon2.default,
+      this.props,
+      _react2.default.createElement('path', { d: 'M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z' })
+    );
+  }
+});
+
+exports.default = ActionList;
+module.exports = exports['default'];
+    })(exports,require,module);
+  });
+require.register('material-ui/lib/svg-icons/action/note-add', function(exports,req,module){
+    var require = __makeRequire((req), {});
+    (function(exports,require,module) {
+      'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactAddonsPureRenderMixin = require('react-addons-pure-render-mixin');
+
+var _reactAddonsPureRenderMixin2 = _interopRequireDefault(_reactAddonsPureRenderMixin);
+
+var _svgIcon = require('../../svg-icon');
+
+var _svgIcon2 = _interopRequireDefault(_svgIcon);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ActionNoteAdd = _react2.default.createClass({
+  displayName: 'ActionNoteAdd',
+
+  mixins: [_reactAddonsPureRenderMixin2.default],
+
+  render: function render() {
+    return _react2.default.createElement(
+      _svgIcon2.default,
+      this.props,
+      _react2.default.createElement('path', { d: 'M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 14h-3v3h-2v-3H8v-2h3v-3h2v3h3v2zm-3-7V3.5L18.5 9H13z' })
+    );
+  }
+});
+
+exports.default = ActionNoteAdd;
+module.exports = exports['default'];
+    })(exports,require,module);
+  });
 require.register('material-ui/lib/svg-icons/action/question-answer', function(exports,req,module){
     var require = __makeRequire((req), {});
     (function(exports,require,module) {
@@ -14637,6 +15076,47 @@ var ActionSearch = _react2.default.createClass({
 });
 
 exports.default = ActionSearch;
+module.exports = exports['default'];
+    })(exports,require,module);
+  });
+require.register('material-ui/lib/svg-icons/action/settings', function(exports,req,module){
+    var require = __makeRequire((req), {});
+    (function(exports,require,module) {
+      'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactAddonsPureRenderMixin = require('react-addons-pure-render-mixin');
+
+var _reactAddonsPureRenderMixin2 = _interopRequireDefault(_reactAddonsPureRenderMixin);
+
+var _svgIcon = require('../../svg-icon');
+
+var _svgIcon2 = _interopRequireDefault(_svgIcon);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ActionSettings = _react2.default.createClass({
+  displayName: 'ActionSettings',
+
+  mixins: [_reactAddonsPureRenderMixin2.default],
+
+  render: function render() {
+    return _react2.default.createElement(
+      _svgIcon2.default,
+      this.props,
+      _react2.default.createElement('path', { d: 'M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z' })
+    );
+  }
+});
+
+exports.default = ActionSettings;
 module.exports = exports['default'];
     })(exports,require,module);
   });
@@ -14965,6 +15445,47 @@ var SocialNotifications = _react2.default.createClass({
 });
 
 exports.default = SocialNotifications;
+module.exports = exports['default'];
+    })(exports,require,module);
+  });
+require.register('material-ui/lib/svg-icons/social/person-add', function(exports,req,module){
+    var require = __makeRequire((req), {});
+    (function(exports,require,module) {
+      'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactAddonsPureRenderMixin = require('react-addons-pure-render-mixin');
+
+var _reactAddonsPureRenderMixin2 = _interopRequireDefault(_reactAddonsPureRenderMixin);
+
+var _svgIcon = require('../../svg-icon');
+
+var _svgIcon2 = _interopRequireDefault(_svgIcon);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var SocialPersonAdd = _react2.default.createClass({
+  displayName: 'SocialPersonAdd',
+
+  mixins: [_reactAddonsPureRenderMixin2.default],
+
+  render: function render() {
+    return _react2.default.createElement(
+      _svgIcon2.default,
+      this.props,
+      _react2.default.createElement('path', { d: 'M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z' })
+    );
+  }
+});
+
+exports.default = SocialPersonAdd;
 module.exports = exports['default'];
     })(exports,require,module);
   });
@@ -42604,6 +43125,157 @@ exports.default = App;
 
 });
 
+require.register("components/AvatarWithInfo", function(exports, require, module) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _avatar = require('material-ui/lib/avatar');
+
+var _avatar2 = _interopRequireDefault(_avatar);
+
+var _popover = require('material-ui/lib/popover/popover');
+
+var _popover2 = _interopRequireDefault(_popover);
+
+var _iconButton = require('material-ui/lib/icon-button');
+
+var _iconButton2 = _interopRequireDefault(_iconButton);
+
+var _questionAnswer = require('material-ui/lib/svg-icons/action/question-answer');
+
+var _questionAnswer2 = _interopRequireDefault(_questionAnswer);
+
+var _info = require('material-ui/lib/svg-icons/action/info');
+
+var _info2 = _interopRequireDefault(_info);
+
+var _noteAdd = require('material-ui/lib/svg-icons/action/note-add');
+
+var _noteAdd2 = _interopRequireDefault(_noteAdd);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var AvatarWithInfo = function (_React$Component) {
+  _inherits(AvatarWithInfo, _React$Component);
+
+  function AvatarWithInfo(props) {
+    _classCallCheck(this, AvatarWithInfo);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AvatarWithInfo).call(this, props));
+
+    _this.handleOpen = function (event) {
+      _this.setState({
+        open: true,
+        anchorEl: event.currentTarget
+      });
+    };
+
+    _this.handleClose = function () {
+      _this.setState({ open: false });
+    };
+
+    _this.state = {
+      open: false
+    };
+    return _this;
+  }
+
+  _createClass(AvatarWithInfo, [{
+    key: 'render',
+    value: function render() {
+      var avatarSrc = this.props.avatarSrc;
+
+
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(_avatar2.default, {
+          size: 51,
+          src: avatarSrc,
+          onClick: this.handleOpen,
+          style: { cursor: 'pointer' }
+        }),
+        _react2.default.createElement(
+          _popover2.default,
+          {
+            open: this.state.open,
+            anchorEl: this.state.anchorEl,
+            anchorOrigin: { horizontal: 'middle', vertical: 'bottom' },
+            targetOrigin: { horizontal: 'middle', vertical: 'top' },
+            useLayerForClickAway: false,
+            onRequestClose: this.handleClose
+          },
+          _react2.default.createElement(
+            'div',
+            { style: { padding: '32px', textAlign: 'center', width: '200px' } },
+            _react2.default.createElement(_avatar2.default, {
+              size: 128,
+              src: avatarSrc,
+              onClick: this.handleOpen,
+              style: { cursor: 'pointer' }
+            }),
+            _react2.default.createElement(
+              'div',
+              { style: { fontSize: '18px', lineHeight: '24px' } },
+              'Nicky Cage'
+            ),
+            _react2.default.createElement(
+              'div',
+              { style: { fontSize: '12px', lineHeight: '16px' } },
+              'I like tuna sandwiches.'
+            ),
+            _react2.default.createElement(
+              'div',
+              { style: { display: 'flex' } },
+              _react2.default.createElement(
+                _iconButton2.default,
+                { tooltip: 'Private Message' },
+                _react2.default.createElement(_questionAnswer2.default, { color: 'rgba(0,0,0,0.7)' })
+              ),
+              _react2.default.createElement(
+                _iconButton2.default,
+                { tooltip: 'More Info' },
+                _react2.default.createElement(_info2.default, { color: 'rgba(0,0,0,0.7)' })
+              ),
+              _react2.default.createElement(
+                _iconButton2.default,
+                { tooltip: 'Notes' },
+                _react2.default.createElement(_noteAdd2.default, { color: 'rgba(0,0,0,0.7)' })
+              )
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return AvatarWithInfo;
+}(_react2.default.Component);
+
+exports.default = AvatarWithInfo;
+
+
+AvatarWithInfo.defaultProps = {
+  avatarSrc: 'http://www.placecage.com/200/200'
+};
+
+});
+
 require.register("components/ChatContainer", function(exports, require, module) {
 'use strict';
 
@@ -42836,6 +43508,10 @@ var _moreVert = require('material-ui/lib/svg-icons/navigation/more-vert');
 
 var _moreVert2 = _interopRequireDefault(_moreVert);
 
+var _AvatarWithInfo = require('./AvatarWithInfo');
+
+var _AvatarWithInfo2 = _interopRequireDefault(_AvatarWithInfo);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -42913,7 +43589,7 @@ var ChatMessageItem = function (_React$Component) {
             _react2.default.createElement(_moreVert2.default, { color: 'rgba(0,0,0,0.5)' })
           ),
           anchorOrigin: { horizontal: 'middle', vertical: 'bottom' },
-          targetOrigin: { horizontal: 'middle', vertical: 'top' }
+          targetOrigin: { horizontal: 'left', vertical: 'top' }
         },
         _react2.default.createElement(_menuItem2.default, { primaryText: 'Translate' }),
         _react2.default.createElement(_menuItem2.default, { primaryText: 'Copy' }),
@@ -42938,7 +43614,7 @@ var ChatMessageItem = function (_React$Component) {
           _react2.default.createElement(
             'div',
             { className: 'chat-avatar' },
-            _react2.default.createElement(_avatar2.default, { size: 51, src: avatarSrc })
+            _react2.default.createElement(_AvatarWithInfo2.default, { avatarSrc: avatarSrc })
           ),
           _react2.default.createElement(
             'div',
@@ -43155,6 +43831,34 @@ var _divider = require('material-ui/lib/divider');
 
 var _divider2 = _interopRequireDefault(_divider);
 
+var _avatar = require('material-ui/lib/avatar');
+
+var _avatar2 = _interopRequireDefault(_avatar);
+
+var _raisedButton = require('material-ui/lib/raised-button');
+
+var _raisedButton2 = _interopRequireDefault(_raisedButton);
+
+var _personAdd = require('material-ui/lib/svg-icons/social/person-add');
+
+var _personAdd2 = _interopRequireDefault(_personAdd);
+
+var _list = require('material-ui/lib/svg-icons/action/list');
+
+var _list2 = _interopRequireDefault(_list);
+
+var _info = require('material-ui/lib/svg-icons/action/info');
+
+var _info2 = _interopRequireDefault(_info);
+
+var _settings = require('material-ui/lib/svg-icons/action/settings');
+
+var _settings2 = _interopRequireDefault(_settings);
+
+var _exitToApp = require('material-ui/lib/svg-icons/action/exit-to-app');
+
+var _exitToApp2 = _interopRequireDefault(_exitToApp);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -43162,6 +43866,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+// import LogoutIcon from 'material-ui/lib/svg-icons/action/power-settings-new';
+
 
 var HeaderSearch = function (_React$Component) {
   _inherits(HeaderSearch, _React$Component);
@@ -43234,14 +43940,55 @@ var HeaderSearch = function (_React$Component) {
           _react2.default.createElement(
             _menu2.default,
             {
+              className: 'header-menu',
               style: { position: 'relative' },
               zDepth: 0,
               onItemTouchTap: this.handleItemTouchTap
             },
-            _react2.default.createElement(_menuItem2.default, { primaryText: 'Maps' }),
-            _react2.default.createElement(_menuItem2.default, { primaryText: 'Interesting option' }),
-            _react2.default.createElement(_menuItem2.default, { primaryText: 'Lorem Ipsum' }),
-            _react2.default.createElement(_menuItem2.default, { primaryText: 'Do something' })
+            _react2.default.createElement(
+              _menuItem2.default,
+              { style: { paddingTop: '12px', paddingBottom: '12px' } },
+              _react2.default.createElement(
+                'div',
+                { style: { display: 'flex' } },
+                _react2.default.createElement(_avatar2.default, { size: 72, src: 'http://www.fillmurray.com/200/201' }),
+                _react2.default.createElement(
+                  'div',
+                  { style: { padding: '12px' } },
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'menu-name' },
+                    'Billy Murray'
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'menu-my-account' },
+                    'My Account'
+                  )
+                )
+              )
+            ),
+            _react2.default.createElement(_divider2.default, null),
+            _react2.default.createElement(_menuItem2.default, { primaryText: 'Invite to team', leftIcon: _react2.default.createElement(_personAdd2.default, null) }),
+            _react2.default.createElement(_menuItem2.default, { primaryText: 'Team directory', leftIcon: _react2.default.createElement(_list2.default, null) }),
+            _react2.default.createElement(_menuItem2.default, { primaryText: 'Team info', leftIcon: _react2.default.createElement(_info2.default, null) }),
+            _react2.default.createElement(_menuItem2.default, { primaryText: 'Team settings', leftIcon: _react2.default.createElement(_settings2.default, null) }),
+            _react2.default.createElement(_divider2.default, null),
+            _react2.default.createElement(
+              _menuItem2.default,
+              { innerDivStyle: { background: 'white' } },
+              _react2.default.createElement(
+                'div',
+                { style: { display: 'flex' } },
+                _react2.default.createElement(_raisedButton2.default, {
+                  label: 'Logout',
+                  primary: true,
+                  style: { width: '100%', height: 'auto' },
+                  labelPosition: 'before',
+                  icon: _react2.default.createElement(_exitToApp2.default, null)
+                })
+              )
+            )
           )
         )
       );
@@ -43276,9 +44023,17 @@ var _questionAnswer = require('material-ui/lib/svg-icons/action/question-answer'
 
 var _questionAnswer2 = _interopRequireDefault(_questionAnswer);
 
-var _popover = require('material-ui/lib/popover/popover');
+var _dialog = require('material-ui/lib/dialog');
 
-var _popover2 = _interopRequireDefault(_popover);
+var _dialog2 = _interopRequireDefault(_dialog);
+
+var _flatButton = require('material-ui/lib/flat-button');
+
+var _flatButton2 = _interopRequireDefault(_flatButton);
+
+var _textField = require('material-ui/lib/text-field');
+
+var _textField2 = _interopRequireDefault(_textField);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -43287,6 +44042,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+// import Popover from 'material-ui/lib/popover/popover';
 
 var HeaderNewConversation = function (_React$Component) {
   _inherits(HeaderNewConversation, _React$Component);
@@ -43317,6 +44073,16 @@ var HeaderNewConversation = function (_React$Component) {
     key: 'render',
     value: function render() {
       var iconColor = 'white';
+      var actions = [_react2.default.createElement(_flatButton2.default, {
+        label: 'Cancel',
+        secondary: true,
+        onTouchTap: this.handleClose
+      }), _react2.default.createElement(_flatButton2.default, {
+        label: 'Submit',
+        primary: true,
+        keyboardFocused: true,
+        onTouchTap: this.handleClose
+      })];
       return _react2.default.createElement(
         'div',
         null,
@@ -43333,19 +44099,22 @@ var HeaderNewConversation = function (_React$Component) {
           )
         ),
         _react2.default.createElement(
-          _popover2.default,
+          _dialog2.default,
           {
+            title: 'New Conversation',
+            actions: actions,
+            modal: false,
             open: this.state.open,
-            anchorEl: this.state.anchorEl,
-            anchorOrigin: { horizontal: 'middle', vertical: 'bottom' },
-            targetOrigin: { horizontal: 'middle', vertical: 'top' },
-            useLayerForClickAway: false,
             onRequestClose: this.handleClose
           },
+          'Select who you would like to add to this new conversation.',
           _react2.default.createElement(
-            'h1',
+            'div',
             null,
-            'New Convo Stuff Here'
+            _react2.default.createElement(_textField2.default, {
+              hintText: 'Hint Text',
+              floatingLabelText: 'Floating Label Text'
+            })
           )
         )
       );
@@ -43354,6 +44123,18 @@ var HeaderNewConversation = function (_React$Component) {
 
   return HeaderNewConversation;
 }(_react2.default.Component);
+
+// <Popover
+//   open={this.state.open}
+//   anchorEl={this.state.anchorEl}
+//   anchorOrigin={{horizontal: 'middle', vertical: 'bottom'}}
+//   targetOrigin={{horizontal: 'middle', vertical: 'top'}}
+//   useLayerForClickAway={false}
+//   onRequestClose={this.handleClose}
+// >
+//   <h1>New Convo Stuff Here</h1>
+// </Popover>
+
 
 exports.default = HeaderNewConversation;
 
@@ -43496,6 +44277,14 @@ var _flatButton = require('material-ui/lib/flat-button');
 
 var _flatButton2 = _interopRequireDefault(_flatButton);
 
+var _textField = require('material-ui/lib/text-field');
+
+var _textField2 = _interopRequireDefault(_textField);
+
+var _circularProgress = require('material-ui/lib/circular-progress');
+
+var _circularProgress2 = _interopRequireDefault(_circularProgress);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -43560,7 +44349,20 @@ var HeaderSearch = function (_React$Component) {
             open: this.state.open,
             onRequestClose: this.handleClose
           },
-          'This is where the user will do some searching.'
+          'This is where the user will do some searching.',
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(_textField2.default, {
+              hintText: 'Hint Text',
+              floatingLabelText: 'Floating Label Text'
+            })
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(_circularProgress2.default, null)
+          )
         )
       );
     }

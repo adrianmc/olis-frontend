@@ -7,6 +7,8 @@ import MenuItem from 'material-ui/lib/menus/menu-item';
 import IconButton from 'material-ui/lib/icon-button';
 import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
 
+import AvatarWithInfo from './AvatarWithInfo';
+
 export default class ChatMessageItem extends React.Component {
 
   constructor(props) {
@@ -84,7 +86,7 @@ export default class ChatMessageItem extends React.Component {
         <div className="chat-author">{authorName}</div>
         <div className="chat-primary">
           <div className="chat-avatar">
-            <Avatar size={51} src={avatarSrc} />
+            <AvatarWithInfo avatarSrc={avatarSrc} />
           </div>
           <div className="chat-body">
             <div className="chat-bubble">
