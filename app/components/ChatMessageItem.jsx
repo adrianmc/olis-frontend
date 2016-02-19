@@ -2,7 +2,31 @@ import React from 'react';
 
 import Avatar from 'material-ui/lib/avatar';
 
+import IconMenu from 'material-ui/lib/menus/icon-menu';
+import MenuItem from 'material-ui/lib/menus/menu-item';
+import IconButton from 'material-ui/lib/icon-button';
+import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
+
 export default class ChatMessageItem extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      isHovering: false,
+    };
+  }
+
+  handleMouseEnter = () => {
+    this.setState({ isHovering: true });
+  }
+
+  handleMouseLeave = () => {
+    this.setState({ isHovering: false });
+  }
+
+  handleItemTouchTap = (event, child) => {
+    console.log('You have selected: ' + child.props.primaryText);
+  }
 
   render() {
 
@@ -15,9 +39,48 @@ export default class ChatMessageItem extends React.Component {
     } = this.props;
     
     const authorClass = selfAuthor ? ' you' : '';
+    const buttonStyle = () => {
+      if (this.state.isHovering) {
+        return ({
+          padding: '0',
+          width: '36px',
+          height: '36px'
+        });
+      } else {
+        return ({
+          padding: '0',
+          width: '36px',
+          height: '36px',
+          opacity: '0',
+          pointerEvents: 'none',
+        });
+      }
+    }
+    const contextMenu = (
+      <IconMenu
+        onItemTouchTap={this.handleItemTouchTap}
+        iconButtonElement={
+          <IconButton 
+            style={buttonStyle()}
+          >
+            <MoreVertIcon color="rgba(0,0,0,0.5)" />
+          </IconButton>
+        }
+        anchorOrigin={{horizontal: 'middle', vertical: 'bottom'}}
+        targetOrigin={{horizontal: 'middle', vertical: 'top'}}
+      >
+        <MenuItem primaryText="Translate" />
+        <MenuItem primaryText="Copy" />
+        <MenuItem primaryText="Lorem Ipsum" />
+      </IconMenu>
+    );
 
     return (
-      <div className={'chat-msg-item' + authorClass}>
+      <div 
+        className={'chat-msg-item' + authorClass}
+        onMouseEnter={this.handleMouseEnter}
+        onMouseLeave={this.handleMouseLeave}
+      >
         <div className="chat-author">{authorName}</div>
         <div className="chat-primary">
           <div className="chat-avatar">
@@ -28,6 +91,9 @@ export default class ChatMessageItem extends React.Component {
               <p>{content}</p>
             </div>
             <div className="chat-timestamp">{timestamp}</div>
+          </div>
+          <div>
+            {contextMenu}
           </div>
         </div>
       </div>
