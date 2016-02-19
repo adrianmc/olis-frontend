@@ -67,7 +67,7 @@ export default class ChatMessageItem extends React.Component {
           </IconButton>
         }
         anchorOrigin={{horizontal: 'middle', vertical: 'bottom'}}
-        targetOrigin={{horizontal: 'middle', vertical: 'top'}}
+        targetOrigin={{horizontal: 'left', vertical: 'top'}}
       >
         <MenuItem primaryText="Translate" />
         <MenuItem primaryText="Copy" />
