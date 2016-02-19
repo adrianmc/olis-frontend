@@ -42541,65 +42541,7 @@ module.exports = warning;
   });
 require.register('process/browser', function(exports,require,module) {
     module.exports = require('process');
-  });process = require('process');})();'use strict';
-
-/* jshint ignore:start */
-(function () {
-  var WebSocket = window.WebSocket || window.MozWebSocket;
-  var br = window.brunch = window.brunch || {};
-  var ar = br['auto-reload'] = br['auto-reload'] || {};
-  if (!WebSocket || ar.disabled) return;
-
-  var cacheBuster = function cacheBuster(url) {
-    var date = Math.round(Date.now() / 1000).toString();
-    url = url.replace(/(\&|\\?)cacheBuster=\d*/, '');
-    return url + (url.indexOf('?') >= 0 ? '&' : '?') + 'cacheBuster=' + date;
-  };
-
-  var browser = navigator.userAgent.toLowerCase();
-  var forceRepaint = ar.forceRepaint || browser.indexOf('chrome') > -1;
-
-  var reloaders = {
-    page: function page() {
-      window.location.reload(true);
-    },
-
-    stylesheet: function stylesheet() {
-      [].slice.call(document.querySelectorAll('link[rel=stylesheet]')).filter(function (link) {
-        var val = link.getAttribute('data-autoreload');
-        return link.href && val != 'false';
-      }).forEach(function (link) {
-        link.href = cacheBuster(link.href);
-      });
-
-      // Hack to force page repaint after 25ms.
-      if (forceRepaint) setTimeout(function () {
-        document.body.offsetHeight;
-      }, 25);
-    }
-  };
-  var port = ar.port || 9485;
-  var host = br.server || window.location.hostname || 'localhost';
-
-  var connect = function connect() {
-    var connection = new WebSocket('ws://' + host + ':' + port);
-    connection.onmessage = function (event) {
-      if (ar.disabled) return;
-      var message = event.data;
-      var reloader = reloaders[message] || reloaders.page;
-      reloader();
-    };
-    connection.onerror = function () {
-      if (connection.readyState) connection.close();
-    };
-    connection.onclose = function () {
-      window.setTimeout(connect, 1000);
-    };
-  };
-  connect();
-})();
-/* jshint ignore:end */
-;/*!
+  });process = require('process');})();/*!
 	Autosize 3.0.15
 	license: MIT
 	http://www.jacklmoore.com/autosize
@@ -42659,9 +42601,10 @@ var App = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = App;
+
 });
 
-;require.register("components/ChatContainer", function(exports, require, module) {
+require.register("components/ChatContainer", function(exports, require, module) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -42857,9 +42800,10 @@ var ChatContainer = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = ChatContainer;
+
 });
 
-;require.register("components/ChatMessageItem", function(exports, require, module) {
+require.register("components/ChatMessageItem", function(exports, require, module) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -43037,6 +42981,7 @@ ChatMessageItem.defaultProps = {
   timestamp: '5 minutes ago',
   selfAuthor: false
 };
+
 });
 
 require.register("components/ConversationItem", function(exports, require, module) {
@@ -43178,6 +43123,7 @@ ConversationItem.defaultProps = {
   unreadCount: 2,
   active: false
 };
+
 });
 
 require.register("components/HeaderMenu", function(exports, require, module) {
@@ -43306,9 +43252,10 @@ var HeaderSearch = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = HeaderSearch;
+
 });
 
-;require.register("components/HeaderNewConversation", function(exports, require, module) {
+require.register("components/HeaderNewConversation", function(exports, require, module) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -43409,9 +43356,10 @@ var HeaderNewConversation = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = HeaderNewConversation;
+
 });
 
-;require.register("components/HeaderNotifications", function(exports, require, module) {
+require.register("components/HeaderNotifications", function(exports, require, module) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -43512,9 +43460,10 @@ var HeaderNotifications = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = HeaderNotifications;
+
 });
 
-;require.register("components/HeaderSearch", function(exports, require, module) {
+require.register("components/HeaderSearch", function(exports, require, module) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -43621,9 +43570,10 @@ var HeaderSearch = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = HeaderSearch;
+
 });
 
-;require.register("components/Main", function(exports, require, module) {
+require.register("components/Main", function(exports, require, module) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -43703,9 +43653,10 @@ var Main = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = Main;
+
 });
 
-;require.register("components/NotesContainer", function(exports, require, module) {
+require.register("components/NotesContainer", function(exports, require, module) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -43824,9 +43775,10 @@ var NotesContainer = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = NotesContainer;
+
 });
 
-;require.register("components/Sidebar", function(exports, require, module) {
+require.register("components/Sidebar", function(exports, require, module) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -44007,9 +43959,10 @@ var Sidebar = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = Sidebar;
+
 });
 
-;require.register("components/TeamIcon", function(exports, require, module) {
+require.register("components/TeamIcon", function(exports, require, module) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -44142,6 +44095,7 @@ TeamIcon.defaultProps = {
   unreadCount: 2,
   active: false
 };
+
 });
 
 require.register("components/Teams", function(exports, require, module) {
@@ -44317,9 +44271,10 @@ var Teams = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = Teams;
+
 });
 
-;require.register("initialize", function(exports, require, module) {
+require.register("initialize", function(exports, require, module) {
 'use strict';
 
 var _reactDom = require('react-dom');
@@ -44339,7 +44294,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 document.addEventListener('DOMContentLoaded', function () {
   _reactDom2.default.render(_react2.default.createElement(_App2.default, null), document.getElementById('app'));
 });
+
 });
 
-
-//# sourceMappingURL=app.js.map
