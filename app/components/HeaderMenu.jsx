@@ -6,13 +6,13 @@ import MenuItem from 'material-ui/lib/menus/menu-item';
 import Divider from 'material-ui/lib/divider';
 
 import Avatar from 'material-ui/lib/avatar';
-import RaisedButton from 'material-ui/lib/raised-button';
 
 import AddPersonIcon from 'material-ui/lib/svg-icons/social/person-add';
 import TeamDirIcon from 'material-ui/lib/svg-icons/action/list';
 import TeamInfoIcon from 'material-ui/lib/svg-icons/action/info';
 import TeamSettingsIcon from 'material-ui/lib/svg-icons/action/settings';
-// import LogoutIcon from 'material-ui/lib/svg-icons/action/power-settings-new';
+
+import RaisedButton from 'material-ui/lib/raised-button';
 import LogoutIcon from 'material-ui/lib/svg-icons/action/exit-to-app';
 
 export default class HeaderSearch extends React.Component {
@@ -84,18 +84,20 @@ export default class HeaderSearch extends React.Component {
             </MenuItem>
             <Divider />
             <MenuItem primaryText="Invite to team" leftIcon={<AddPersonIcon />}/>
-            <MenuItem primaryText="Team directory" leftIcon={<TeamDirIcon />}/>
-            <MenuItem primaryText="Team info" leftIcon={<TeamInfoIcon />}/>
-            <MenuItem primaryText="Team settings" leftIcon={<TeamSettingsIcon />}/>
+            <MenuItem primaryText="Team directory" leftIcon={<TeamDirIcon />} disabled/>
+            <MenuItem primaryText="Team info" leftIcon={<TeamInfoIcon />} disabled/>
+            <MenuItem primaryText="Team settings" leftIcon={<TeamSettingsIcon />} disabled/>
             <Divider />
             <MenuItem innerDivStyle={{background:'white'}}>
               <div style={{display: 'flex'}}>
                 <RaisedButton
                   label="Logout"
                   primary={true}
-                  style={{width:'100%',height:'auto'}}
+                  style={{lineHeight:'36px'}}
+                  labelStyle={{verticalAlign:'middle'}}
                   labelPosition="before"
                   icon={<LogoutIcon />}
+                  fullWidth
                 />
               </div>
             </MenuItem>
