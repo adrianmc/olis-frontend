@@ -6502,6 +6502,160 @@ exports.default = Badge;
 module.exports = exports['default'];
     })(exports,require,module);
   });
+require.register('material-ui/lib/before-after-wrapper', function(exports,req,module){
+    var require = __makeRequire((req), {});
+    (function(exports,require,module) {
+      'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _stylePropable = require('./mixins/style-propable');
+
+var _stylePropable2 = _interopRequireDefault(_stylePropable);
+
+var _getMuiTheme = require('./styles/getMuiTheme');
+
+var _getMuiTheme2 = _interopRequireDefault(_getMuiTheme);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+/**
+ *  BeforeAfterWrapper
+ *    An alternative for the ::before and ::after css pseudo-elements for
+ *    components whose styles are defined in javascript instead of css.
+ *
+ *  Usage: For the element that we want to apply before and after elements to,
+ *    wrap its children with BeforeAfterWrapper. For example:
+ *
+ *                                            <Paper>
+ *  <Paper>                                     <div> // See notice
+ *    <BeforeAfterWrapper>        renders         <div/> // before element
+ *      [children of paper]       ------>         [children of paper]
+ *    </BeforeAfterWrapper>                       <div/> // after element
+ *  </Paper>                                    </div>
+ *                                            </Paper>
+ *
+ *  Notice: Notice that this div bundles together our elements. If the element
+ *    that we want to apply before and after elements is a HTML tag (i.e. a
+ *    div, p, or button tag), we can avoid this extra nesting by passing using
+ *    the BeforeAfterWrapper in place of said tag like so:
+ *
+ *  <p>
+ *    <BeforeAfterWrapper>   do this instead   <BeforeAfterWrapper elementType='p'>
+ *      [children of p]          ------>         [children of p]
+ *    </BeforeAfterWrapper>                    </BeforeAfterWrapper>
+ *  </p>
+ *
+ *  BeforeAfterWrapper features spread functionality. This means that we can
+ *  pass HTML tag properties directly into the BeforeAfterWrapper tag.
+ *
+ *  When using BeforeAfterWrapper, ensure that the parent of the beforeElement
+ *  and afterElement have a defined style position.
+ */
+
+var BeforeAfterWrapper = _react2.default.createClass({
+  displayName: 'BeforeAfterWrapper',
+
+  propTypes: {
+    afterElementType: _react2.default.PropTypes.string,
+    afterStyle: _react2.default.PropTypes.object,
+    beforeElementType: _react2.default.PropTypes.string,
+    beforeStyle: _react2.default.PropTypes.object,
+    children: _react2.default.PropTypes.node,
+    elementType: _react2.default.PropTypes.string,
+
+    /**
+     * Override the inline-styles of the root element.
+     */
+    style: _react2.default.PropTypes.object
+  },
+
+  contextTypes: {
+    muiTheme: _react2.default.PropTypes.object
+  },
+
+  //for passing default theme context to children
+  childContextTypes: {
+    muiTheme: _react2.default.PropTypes.object
+  },
+
+  mixins: [_stylePropable2.default],
+
+  getDefaultProps: function getDefaultProps() {
+    return {
+      beforeElementType: 'div',
+      afterElementType: 'div',
+      elementType: 'div'
+    };
+  },
+  getInitialState: function getInitialState() {
+    return {
+      muiTheme: this.context.muiTheme || (0, _getMuiTheme2.default)()
+    };
+  },
+  getChildContext: function getChildContext() {
+    return {
+      muiTheme: this.state.muiTheme
+    };
+  },
+
+  //to update theme inside state whenever a new theme is passed down
+  //from the parent / owner using context
+  componentWillReceiveProps: function componentWillReceiveProps(nextProps, nextContext) {
+    var newMuiTheme = nextContext.muiTheme ? nextContext.muiTheme : this.state.muiTheme;
+    this.setState({ muiTheme: newMuiTheme });
+  },
+  render: function render() {
+    var _props = this.props;
+    var beforeStyle = _props.beforeStyle;
+    var afterStyle = _props.afterStyle;
+    var beforeElementType = _props.beforeElementType;
+    var afterElementType = _props.afterElementType;
+    var elementType = _props.elementType;
+
+    var other = _objectWithoutProperties(_props, ['beforeStyle', 'afterStyle', 'beforeElementType', 'afterElementType', 'elementType']);
+
+    var beforeElement = undefined;
+    var afterElement = undefined;
+
+    beforeStyle = {
+      boxSizing: 'border-box'
+    };
+
+    afterStyle = {
+      boxSizing: 'border-box'
+    };
+
+    if (this.props.beforeStyle) beforeElement = _react2.default.createElement(this.props.beforeElementType, {
+      style: this.prepareStyles(beforeStyle, this.props.beforeStyle),
+      key: '::before'
+    });
+    if (this.props.afterStyle) afterElement = _react2.default.createElement(this.props.afterElementType, {
+      style: this.prepareStyles(afterStyle, this.props.afterStyle),
+      key: '::after'
+    });
+
+    var children = [beforeElement, this.props.children, afterElement];
+
+    var props = other;
+    props.style = this.prepareStyles(this.props.style);
+
+    return _react2.default.createElement(this.props.elementType, props, children);
+  }
+});
+
+exports.default = BeforeAfterWrapper;
+module.exports = exports['default'];
+    })(exports,require,module);
+  });
 require.register('material-ui/lib/buttons/flat-button-label', function(exports,req,module){
     var require = __makeRequire((req), {});
     (function(exports,require,module) {
@@ -6601,6 +6755,267 @@ var FlatButtonLabel = _react2.default.createClass({
 });
 
 exports.default = FlatButtonLabel;
+module.exports = exports['default'];
+    })(exports,require,module);
+  });
+require.register('material-ui/lib/checkbox', function(exports,req,module){
+    var require = __makeRequire((req), {});
+    (function(exports,require,module) {
+      'use strict';
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _enhancedSwitch = require('./enhanced-switch');
+
+var _enhancedSwitch2 = _interopRequireDefault(_enhancedSwitch);
+
+var _stylePropable = require('./mixins/style-propable');
+
+var _stylePropable2 = _interopRequireDefault(_stylePropable);
+
+var _transitions = require('./styles/transitions');
+
+var _transitions2 = _interopRequireDefault(_transitions);
+
+var _checkBoxOutlineBlank = require('./svg-icons/toggle/check-box-outline-blank');
+
+var _checkBoxOutlineBlank2 = _interopRequireDefault(_checkBoxOutlineBlank);
+
+var _checkBox = require('./svg-icons/toggle/check-box');
+
+var _checkBox2 = _interopRequireDefault(_checkBox);
+
+var _getMuiTheme = require('./styles/getMuiTheme');
+
+var _getMuiTheme2 = _interopRequireDefault(_getMuiTheme);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+var Checkbox = _react2.default.createClass({
+  displayName: 'Checkbox',
+
+  propTypes: {
+    /**
+     * Checkbox is checked if true.
+     */
+    checked: _react2.default.PropTypes.bool,
+
+    /**
+     * The SvgIcon to use for the checked state.
+     * This is useful to create icon toggles.
+     */
+    checkedIcon: _react2.default.PropTypes.element,
+
+    /**
+     * The default state of our checkbox component.
+     */
+    defaultChecked: _react2.default.PropTypes.bool,
+
+    /**
+     * Disabled if true.
+     */
+    disabled: _react2.default.PropTypes.bool,
+
+    /**
+     * Overrides the inline-styles of the icon element.
+     */
+    iconStyle: _react2.default.PropTypes.object,
+
+    /**
+     * Where the label will be placed next to the checkbox.
+     */
+    labelPosition: _react2.default.PropTypes.oneOf(['left', 'right']),
+
+    /**
+     * Overrides the inline-styles of the Checkbox element label.
+     */
+    labelStyle: _react2.default.PropTypes.object,
+
+    /**
+     * Callback function that is fired when the checkbox is checked.
+     */
+    onCheck: _react2.default.PropTypes.func,
+
+    /**
+     * Override the inline-styles of the root element.
+     */
+    style: _react2.default.PropTypes.object,
+
+    /**
+     * The SvgIcon to use for the unchecked state.
+     * This is useful to create icon toggles.
+     */
+    unCheckedIcon: _react2.default.PropTypes.element,
+
+    /**
+     * ValueLink for when using controlled checkbox.
+     */
+    valueLink: _react2.default.PropTypes.object
+  },
+
+  contextTypes: {
+    muiTheme: _react2.default.PropTypes.object
+  },
+
+  //for passing default theme context to children
+  childContextTypes: {
+    muiTheme: _react2.default.PropTypes.object
+  },
+
+  mixins: [_stylePropable2.default],
+
+  getDefaultProps: function getDefaultProps() {
+    return {
+      defaultChecked: false,
+      labelPosition: 'right',
+      disabled: false
+    };
+  },
+  getInitialState: function getInitialState() {
+    return {
+      switched: this.props.checked || this.props.defaultChecked || this.props.valueLink && this.props.valueLink.value || false,
+      muiTheme: this.context.muiTheme || (0, _getMuiTheme2.default)()
+    };
+  },
+  getChildContext: function getChildContext() {
+    return {
+      muiTheme: this.state.muiTheme
+    };
+  },
+
+  //to update theme inside state whenever a new theme is passed down
+  //from the parent / owner using context
+  componentWillReceiveProps: function componentWillReceiveProps(nextProps, nextContext) {
+    var newMuiTheme = nextContext.muiTheme ? nextContext.muiTheme : this.state.muiTheme;
+    this.setState({
+      muiTheme: newMuiTheme,
+      switched: this.props.checked !== nextProps.checked ? nextProps.checked : this.state.switched
+    });
+  },
+  getTheme: function getTheme() {
+    return this.state.muiTheme.checkbox;
+  },
+  getStyles: function getStyles() {
+    var checkboxSize = 24;
+    var styles = {
+      icon: {
+        height: checkboxSize,
+        width: checkboxSize
+      },
+      check: {
+        position: 'absolute',
+        opacity: 0,
+        transform: 'scale(0)',
+        transitionOrigin: '50% 50%',
+        transition: _transitions2.default.easeOut('450ms', 'opacity', '0ms') + ', ' + _transitions2.default.easeOut('0ms', 'transform', '450ms'),
+        fill: this.getTheme().checkedColor
+      },
+      box: {
+        position: 'absolute',
+        opacity: 1,
+        fill: this.getTheme().boxColor,
+        transition: _transitions2.default.easeOut('2s', null, '200ms')
+      },
+      checkWhenSwitched: {
+        opacity: 1,
+        transform: 'scale(1)',
+        transition: _transitions2.default.easeOut('0ms', 'opacity', '0ms') + ', ' + _transitions2.default.easeOut('800ms', 'transform', '0ms')
+      },
+      boxWhenSwitched: {
+        transition: _transitions2.default.easeOut('100ms', null, '0ms'),
+        fill: this.getTheme().checkedColor
+      },
+      checkWhenDisabled: {
+        fill: this.getTheme().disabledColor
+      },
+      boxWhenDisabled: {
+        fill: this.getTheme().disabledColor
+      },
+      label: {
+        color: this.props.disabled ? this.getTheme().labelDisabledColor : this.getTheme().labelColor
+      }
+    };
+
+    return styles;
+  },
+  isChecked: function isChecked() {
+    return this.refs.enhancedSwitch.isSwitched();
+  },
+  setChecked: function setChecked(newCheckedValue) {
+    this.refs.enhancedSwitch.setSwitched(newCheckedValue);
+  },
+  _handleCheck: function _handleCheck(e, isInputChecked) {
+    if (this.props.onCheck) this.props.onCheck(e, isInputChecked);
+  },
+  _handleStateChange: function _handleStateChange(newSwitched) {
+    this.setState({ switched: newSwitched });
+  },
+  render: function render() {
+    var _props = this.props;
+    var iconStyle = _props.iconStyle;
+    var onCheck = _props.onCheck;
+    var checkedIcon = _props.checkedIcon;
+    var unCheckedIcon = _props.unCheckedIcon;
+
+    var other = _objectWithoutProperties(_props, ['iconStyle', 'onCheck', 'checkedIcon', 'unCheckedIcon']);
+
+    var styles = this.getStyles();
+    var boxStyles = this.mergeStyles(styles.box, this.state.switched && styles.boxWhenSwitched, iconStyle, this.props.disabled && styles.boxWhenDisabled);
+    var checkStyles = this.mergeStyles(styles.check, this.state.switched && styles.checkWhenSwitched, iconStyle, this.props.disabled && styles.checkWhenDisabled);
+
+    var checkedElement = checkedIcon ? _react2.default.cloneElement(checkedIcon, {
+      style: this.mergeStyles(checkStyles, checkedIcon.props.style)
+    }) : _react2.default.createElement(_checkBox2.default, {
+      style: checkStyles
+    });
+
+    var unCheckedElement = unCheckedIcon ? _react2.default.cloneElement(unCheckedIcon, {
+      style: this.mergeStyles(boxStyles, unCheckedIcon.props.style)
+    }) : _react2.default.createElement(_checkBoxOutlineBlank2.default, {
+      style: boxStyles
+    });
+
+    var checkboxElement = _react2.default.createElement(
+      'div',
+      null,
+      unCheckedElement,
+      checkedElement
+    );
+
+    var rippleColor = this.state.switched ? checkStyles.fill : boxStyles.fill;
+    var mergedIconStyle = this.mergeStyles(styles.icon, iconStyle);
+
+    var labelStyle = this.mergeStyles(styles.label, this.props.labelStyle);
+
+    var enhancedSwitchProps = {
+      ref: 'enhancedSwitch',
+      inputType: 'checkbox',
+      switched: this.state.switched,
+      switchElement: checkboxElement,
+      rippleColor: rippleColor,
+      iconStyle: mergedIconStyle,
+      onSwitch: this._handleCheck,
+      labelStyle: labelStyle,
+      onParentShouldUpdate: this._handleStateChange,
+      defaultSwitched: this.props.defaultChecked,
+      labelPosition: this.props.labelPosition
+    };
+
+    return _react2.default.createElement(_enhancedSwitch2.default, _extends({}, other, enhancedSwitchProps));
+  }
+});
+
+exports.default = Checkbox;
 module.exports = exports['default'];
     })(exports,require,module);
   });
@@ -6876,6 +7291,73 @@ var CircularProgress = _react2.default.createClass({
 });
 
 exports.default = CircularProgress;
+module.exports = exports['default'];
+    })(exports,require,module);
+  });
+require.register('material-ui/lib/clearfix', function(exports,req,module){
+    var require = __makeRequire((req), {});
+    (function(exports,require,module) {
+      'use strict';
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _beforeAfterWrapper = require('./before-after-wrapper');
+
+var _beforeAfterWrapper2 = _interopRequireDefault(_beforeAfterWrapper);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+var styles = {
+  before: {
+    content: "' '",
+    display: 'table'
+  },
+  after: {
+    content: "' '",
+    clear: 'both',
+    display: 'table'
+  }
+};
+
+var ClearFix = function ClearFix(_ref) {
+  var style = _ref.style;
+  var children = _ref.children;
+
+  var other = _objectWithoutProperties(_ref, ['style', 'children']);
+
+  return _react2.default.createElement(
+    _beforeAfterWrapper2.default,
+    _extends({}, other, {
+      beforeStyle: styles.before,
+      afterStyle: styles.after,
+      style: style
+    }),
+    children
+  );
+};
+
+ClearFix.displayName = 'ClearFix';
+
+ClearFix.propTypes = {
+  children: _react2.default.PropTypes.node,
+
+  /**
+   * Override the inline-styles of the root element.
+   */
+  style: _react2.default.PropTypes.object
+};
+
+exports.default = ClearFix;
 module.exports = exports['default'];
     })(exports,require,module);
   });
@@ -7962,6 +8444,485 @@ var EnhancedButton = _react2.default.createClass({
 });
 
 exports.default = EnhancedButton;
+module.exports = exports['default'];
+    })(exports,require,module);
+  });
+require.register('material-ui/lib/enhanced-switch', function(exports,req,module){
+    var require = __makeRequire((req), {});
+    (function(exports,require,module) {
+      'use strict';
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _keyCode = require('./utils/key-code');
+
+var _keyCode2 = _interopRequireDefault(_keyCode);
+
+var _stylePropable = require('./mixins/style-propable');
+
+var _stylePropable2 = _interopRequireDefault(_stylePropable);
+
+var _transitions = require('./styles/transitions');
+
+var _transitions2 = _interopRequireDefault(_transitions);
+
+var _uniqueId = require('./utils/unique-id');
+
+var _uniqueId2 = _interopRequireDefault(_uniqueId);
+
+var _windowListenable = require('./mixins/window-listenable');
+
+var _windowListenable2 = _interopRequireDefault(_windowListenable);
+
+var _clearfix = require('./clearfix');
+
+var _clearfix2 = _interopRequireDefault(_clearfix);
+
+var _focusRipple = require('./ripples/focus-ripple');
+
+var _focusRipple2 = _interopRequireDefault(_focusRipple);
+
+var _touchRipple = require('./ripples/touch-ripple');
+
+var _touchRipple2 = _interopRequireDefault(_touchRipple);
+
+var _paper = require('./paper');
+
+var _paper2 = _interopRequireDefault(_paper);
+
+var _getMuiTheme = require('./styles/getMuiTheme');
+
+var _getMuiTheme2 = _interopRequireDefault(_getMuiTheme);
+
+var _warning = require('warning');
+
+var _warning2 = _interopRequireDefault(_warning);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+var EnhancedSwitch = _react2.default.createClass({
+  displayName: 'EnhancedSwitch',
+
+  propTypes: {
+    checked: _react2.default.PropTypes.bool,
+
+    /**
+     * The css class name of the root element.
+     */
+    className: _react2.default.PropTypes.string,
+    defaultSwitched: _react2.default.PropTypes.bool,
+    disableFocusRipple: _react2.default.PropTypes.bool,
+    disableTouchRipple: _react2.default.PropTypes.bool,
+    disabled: _react2.default.PropTypes.bool,
+    iconStyle: _react2.default.PropTypes.object,
+    id: _react2.default.PropTypes.string,
+    inputType: _react2.default.PropTypes.string.isRequired,
+    label: _react2.default.PropTypes.node,
+    labelPosition: _react2.default.PropTypes.oneOf(['left', 'right']),
+    labelStyle: _react2.default.PropTypes.object,
+    name: _react2.default.PropTypes.string,
+    onBlur: _react2.default.PropTypes.func,
+    onFocus: _react2.default.PropTypes.func,
+    onMouseDown: _react2.default.PropTypes.func,
+    onMouseLeave: _react2.default.PropTypes.func,
+    onMouseUp: _react2.default.PropTypes.func,
+    onParentShouldUpdate: _react2.default.PropTypes.func.isRequired,
+    onSwitch: _react2.default.PropTypes.func,
+    onTouchEnd: _react2.default.PropTypes.func,
+    onTouchStart: _react2.default.PropTypes.func,
+    required: _react2.default.PropTypes.bool,
+    rippleColor: _react2.default.PropTypes.string,
+    rippleStyle: _react2.default.PropTypes.object,
+
+    /**
+     * Override the inline-styles of the root element.
+     */
+    style: _react2.default.PropTypes.object,
+    switchElement: _react2.default.PropTypes.element.isRequired,
+    switched: _react2.default.PropTypes.bool.isRequired,
+    thumbStyle: _react2.default.PropTypes.object,
+    trackStyle: _react2.default.PropTypes.object,
+    value: _react2.default.PropTypes.string
+  },
+
+  contextTypes: {
+    muiTheme: _react2.default.PropTypes.object
+  },
+
+  //for passing default theme context to children
+  childContextTypes: {
+    muiTheme: _react2.default.PropTypes.object
+  },
+
+  mixins: [_windowListenable2.default, _stylePropable2.default],
+
+  getInitialState: function getInitialState() {
+    return {
+      isKeyboardFocused: false,
+      parentWidth: 100,
+      muiTheme: this.context.muiTheme || (0, _getMuiTheme2.default)()
+    };
+  },
+  getChildContext: function getChildContext() {
+    return {
+      muiTheme: this.state.muiTheme
+    };
+  },
+  componentDidMount: function componentDidMount() {
+    var inputNode = _reactDom2.default.findDOMNode(this.refs.checkbox);
+    if (!this.props.switched || inputNode.checked !== this.props.switched) {
+      this.props.onParentShouldUpdate(inputNode.checked);
+    }
+
+    window.addEventListener('resize', this._handleResize);
+
+    this._handleResize();
+  },
+  componentWillReceiveProps: function componentWillReceiveProps(nextProps, nextContext) {
+    var hasCheckedLinkProp = nextProps.hasOwnProperty('checkedLink');
+    var hasCheckedProp = nextProps.hasOwnProperty('checked');
+    var hasToggledProp = nextProps.hasOwnProperty('toggled');
+    var hasNewDefaultProp = nextProps.hasOwnProperty('defaultSwitched') && nextProps.defaultSwitched !== this.props.defaultSwitched;
+    var newState = {};
+    newState.muiTheme = nextContext.muiTheme ? nextContext.muiTheme : this.state.muiTheme;
+
+    if (hasCheckedProp) {
+      newState.switched = nextProps.checked;
+    } else if (hasToggledProp) {
+      newState.switched = nextProps.toggled;
+    } else if (hasCheckedLinkProp) {
+      newState.switched = nextProps.checkedLink.value;
+    } else if (hasNewDefaultProp) {
+      newState.switched = nextProps.defaultSwitched;
+    }
+
+    if (newState.switched !== undefined && newState.switched !== this.props.switched) {
+      this.props.onParentShouldUpdate(newState.switched);
+    }
+
+    this.setState(newState);
+  },
+  componentWillUnmount: function componentWillUnmount() {
+    window.removeEventListener('resize', this._handleResize);
+  },
+
+  windowListeners: {
+    keydown: '_handleWindowKeydown',
+    keyup: '_handleWindowKeyup'
+  },
+
+  getEvenWidth: function getEvenWidth() {
+    return parseInt(window.getComputedStyle(_reactDom2.default.findDOMNode(this.refs.root)).getPropertyValue('width'), 10);
+  },
+  getTheme: function getTheme() {
+    return this.state.muiTheme.rawTheme.palette;
+  },
+  getStyles: function getStyles() {
+    var spacing = this.state.muiTheme.rawTheme.spacing;
+    var switchWidth = 60 - spacing.desktopGutterLess;
+    var labelWidth = 'calc(100% - 60px)';
+    var styles = {
+      root: {
+        position: 'relative',
+        cursor: this.props.disabled ? 'default' : 'pointer',
+        overflow: 'visible',
+        display: 'table',
+        height: 'auto',
+        width: '100%'
+      },
+      input: {
+        position: 'absolute',
+        cursor: this.props.disabled ? 'default' : 'pointer',
+        pointerEvents: 'all',
+        opacity: 0,
+        width: '100%',
+        height: '100%',
+        zIndex: 2,
+        left: 0,
+        boxSizing: 'border-box',
+        padding: 0,
+        margin: 0
+      },
+      controls: {
+        width: '100%',
+        height: '100%'
+      },
+      label: {
+        float: 'left',
+        position: 'relative',
+        display: 'block',
+        width: labelWidth,
+        lineHeight: '24px',
+        color: this.getTheme().textColor,
+        fontFamily: this.state.muiTheme.rawTheme.fontFamily
+      },
+      wrap: {
+        transition: _transitions2.default.easeOut(),
+        float: 'left',
+        position: 'relative',
+        display: 'block',
+        width: switchWidth,
+        marginRight: this.props.labelPosition === 'right' ? spacing.desktopGutterLess : 0,
+        marginLeft: this.props.labelPosition === 'left' ? spacing.desktopGutterLess : 0
+      },
+      ripple: {
+        height: '200%',
+        width: '200%',
+        top: -12,
+        left: -12
+      }
+    };
+
+    return styles;
+  },
+  isSwitched: function isSwitched() {
+    return _reactDom2.default.findDOMNode(this.refs.checkbox).checked;
+  },
+
+  // no callback here because there is no event
+  setSwitched: function setSwitched(newSwitchedValue) {
+    if (!this.props.hasOwnProperty('checked') || this.props.checked === false) {
+      this.props.onParentShouldUpdate(newSwitchedValue);
+      _reactDom2.default.findDOMNode(this.refs.checkbox).checked = newSwitchedValue;
+    } else {
+      process.env.NODE_ENV !== "production" ? (0, _warning2.default)(false, 'Cannot call set method while checked is defined as a property.') : undefined;
+    }
+  },
+  getValue: function getValue() {
+    return _reactDom2.default.findDOMNode(this.refs.checkbox).value;
+  },
+  isKeyboardFocused: function isKeyboardFocused() {
+    return this.state.isKeyboardFocused;
+  },
+  _handleChange: function _handleChange(e) {
+    this._tabPressed = false;
+    this.setState({
+      isKeyboardFocused: false
+    });
+
+    var isInputChecked = _reactDom2.default.findDOMNode(this.refs.checkbox).checked;
+
+    if (!this.props.hasOwnProperty('checked')) {
+      this.props.onParentShouldUpdate(isInputChecked);
+    }
+    if (this.props.onSwitch) {
+      this.props.onSwitch(e, isInputChecked);
+    }
+  },
+
+  // Checkbox inputs only use SPACE to change their state. Using ENTER will
+  // update the ui but not the input.
+  _handleWindowKeydown: function _handleWindowKeydown(e) {
+    if (e.keyCode === _keyCode2.default.TAB) {
+      this._tabPressed = true;
+    }
+    if (e.keyCode === _keyCode2.default.SPACE && this.state.isKeyboardFocused) {
+      this._handleChange(e);
+    }
+  },
+  _handleWindowKeyup: function _handleWindowKeyup(e) {
+    if (e.keyCode === _keyCode2.default.SPACE && this.state.isKeyboardFocused) {
+      this._handleChange(e);
+    }
+  },
+
+  /**
+   * Because both the ripples and the checkbox input cannot share pointer
+   * events, the checkbox input takes control of pointer events and calls
+   * ripple animations manually.
+   */
+  _handleMouseDown: function _handleMouseDown(e) {
+    //only listen to left clicks
+    if (e.button === 0) {
+      this.refs.touchRipple.start(e);
+    }
+  },
+  _handleMouseUp: function _handleMouseUp() {
+    this.refs.touchRipple.end();
+  },
+  _handleMouseLeave: function _handleMouseLeave() {
+    this.refs.touchRipple.end();
+  },
+  _handleTouchStart: function _handleTouchStart(e) {
+    this.refs.touchRipple.start(e);
+  },
+  _handleTouchEnd: function _handleTouchEnd() {
+    this.refs.touchRipple.end();
+  },
+  _handleBlur: function _handleBlur(e) {
+    this.setState({
+      isKeyboardFocused: false
+    });
+
+    if (this.props.onBlur) {
+      this.props.onBlur(e);
+    }
+  },
+  _handleFocus: function _handleFocus(e) {
+    var _this = this;
+
+    //setTimeout is needed becuase the focus event fires first
+    //Wait so that we can capture if this was a keyboard focus
+    //or touch focus
+    setTimeout(function () {
+      if (_this._tabPressed) {
+        _this.setState({
+          isKeyboardFocused: true
+        });
+      }
+    }, 150);
+
+    if (this.props.onFocus) {
+      this.props.onFocus(e);
+    }
+  },
+  _handleResize: function _handleResize() {
+    this.setState({ parentWidth: this.getEvenWidth() });
+  },
+  render: function render() {
+    var _props = this.props;
+    var name = _props.name;
+    var value = _props.value;
+    var label = _props.label;
+    var onSwitch = _props.onSwitch;
+    var defaultSwitched = _props.defaultSwitched;
+    var onBlur = _props.onBlur;
+    var onFocus = _props.onFocus;
+    var onMouseUp = _props.onMouseUp;
+    var onMouseDown = _props.onMouseDown;
+    var onMouseLeave = _props.onMouseLeave;
+    var onTouchStart = _props.onTouchStart;
+    var onTouchEnd = _props.onTouchEnd;
+    var disableTouchRipple = _props.disableTouchRipple;
+    var disableFocusRipple = _props.disableFocusRipple;
+    var className = _props.className;
+
+    var other = _objectWithoutProperties(_props, ['name', 'value', 'label', 'onSwitch', 'defaultSwitched', 'onBlur', 'onFocus', 'onMouseUp', 'onMouseDown', 'onMouseLeave', 'onTouchStart', 'onTouchEnd', 'disableTouchRipple', 'disableFocusRipple', 'className']);
+
+    var styles = this.getStyles();
+    var wrapStyles = this.mergeStyles(styles.wrap, this.props.iconStyle);
+    var rippleStyle = this.mergeStyles(styles.ripple, this.props.rippleStyle);
+    var rippleColor = this.props.hasOwnProperty('rippleColor') ? this.props.rippleColor : this.getTheme().primary1Color;
+
+    if (this.props.thumbStyle) {
+      wrapStyles.marginLeft /= 2;
+      wrapStyles.marginRight /= 2;
+    }
+
+    var inputId = this.props.id || _uniqueId2.default.generate();
+
+    var labelStyle = this.mergeStyles(styles.label, this.props.labelStyle);
+    var labelElement = this.props.label ? _react2.default.createElement(
+      'label',
+      { style: this.prepareStyles(labelStyle), htmlFor: inputId },
+      this.props.label
+    ) : null;
+
+    var inputProps = {
+      ref: 'checkbox',
+      type: this.props.inputType,
+      style: this.prepareStyles(styles.input),
+      name: this.props.name,
+      value: this.props.value,
+      defaultChecked: this.props.defaultSwitched,
+      onBlur: this._handleBlur,
+      onFocus: this._handleFocus
+    };
+
+    var hideTouchRipple = this.props.disabled || disableTouchRipple;
+
+    if (!hideTouchRipple) {
+      inputProps.onMouseUp = this._handleMouseUp;
+      inputProps.onMouseDown = this._handleMouseDown;
+      inputProps.onMouseLeave = this._handleMouseLeave;
+      inputProps.onTouchStart = this._handleTouchStart;
+      inputProps.onTouchEnd = this._handleTouchEnd;
+    }
+
+    if (!this.props.hasOwnProperty('checkedLink')) {
+      inputProps.onChange = this._handleChange;
+    }
+
+    var inputElement = _react2.default.createElement('input', _extends({}, other, inputProps));
+
+    var touchRipple = _react2.default.createElement(_touchRipple2.default, {
+      ref: 'touchRipple',
+      key: 'touchRipple',
+      style: rippleStyle,
+      color: rippleColor,
+      muiTheme: this.state.muiTheme,
+      centerRipple: true
+    });
+
+    var focusRipple = _react2.default.createElement(_focusRipple2.default, {
+      key: 'focusRipple',
+      innerStyle: rippleStyle,
+      color: rippleColor,
+      muiTheme: this.state.muiTheme,
+      show: this.state.isKeyboardFocused
+    });
+
+    var ripples = [hideTouchRipple ? null : touchRipple, this.props.disabled || disableFocusRipple ? null : focusRipple];
+
+    // If toggle component (indicated by whether the style includes thumb) manually lay out
+    // elements in order to nest ripple elements
+    var switchElement = !this.props.thumbStyle ? _react2.default.createElement(
+      'div',
+      { style: this.prepareStyles(wrapStyles) },
+      this.props.switchElement,
+      ripples
+    ) : _react2.default.createElement(
+      'div',
+      { style: this.prepareStyles(wrapStyles) },
+      _react2.default.createElement('div', { style: this.prepareStyles(this.props.trackStyle) }),
+      _react2.default.createElement(
+        _paper2.default,
+        { style: this.props.thumbStyle, zDepth: 1, circle: true },
+        ' ',
+        ripples,
+        ' '
+      )
+    );
+
+    var labelPositionExist = this.props.labelPosition;
+
+    // Position is left if not defined or invalid.
+    var elementsInOrder = labelPositionExist && this.props.labelPosition.toUpperCase() === 'RIGHT' ? _react2.default.createElement(
+      _clearfix2.default,
+      { style: styles.controls },
+      switchElement,
+      labelElement
+    ) : _react2.default.createElement(
+      _clearfix2.default,
+      { style: styles.controls },
+      labelElement,
+      switchElement
+    );
+
+    return _react2.default.createElement(
+      'div',
+      { ref: 'root', className: className, style: this.prepareStyles(styles.root, this.props.style) },
+      inputElement,
+      elementsInOrder
+    );
+  }
+});
+
+exports.default = EnhancedSwitch;
 module.exports = exports['default'];
     })(exports,require,module);
   });
@@ -15527,6 +16488,88 @@ var SocialShare = _react2.default.createClass({
 });
 
 exports.default = SocialShare;
+module.exports = exports['default'];
+    })(exports,require,module);
+  });
+require.register('material-ui/lib/svg-icons/toggle/check-box-outline-blank', function(exports,req,module){
+    var require = __makeRequire((req), {});
+    (function(exports,require,module) {
+      'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactAddonsPureRenderMixin = require('react-addons-pure-render-mixin');
+
+var _reactAddonsPureRenderMixin2 = _interopRequireDefault(_reactAddonsPureRenderMixin);
+
+var _svgIcon = require('../../svg-icon');
+
+var _svgIcon2 = _interopRequireDefault(_svgIcon);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ToggleCheckBoxOutlineBlank = _react2.default.createClass({
+  displayName: 'ToggleCheckBoxOutlineBlank',
+
+  mixins: [_reactAddonsPureRenderMixin2.default],
+
+  render: function render() {
+    return _react2.default.createElement(
+      _svgIcon2.default,
+      this.props,
+      _react2.default.createElement('path', { d: 'M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z' })
+    );
+  }
+});
+
+exports.default = ToggleCheckBoxOutlineBlank;
+module.exports = exports['default'];
+    })(exports,require,module);
+  });
+require.register('material-ui/lib/svg-icons/toggle/check-box', function(exports,req,module){
+    var require = __makeRequire((req), {});
+    (function(exports,require,module) {
+      'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactAddonsPureRenderMixin = require('react-addons-pure-render-mixin');
+
+var _reactAddonsPureRenderMixin2 = _interopRequireDefault(_reactAddonsPureRenderMixin);
+
+var _svgIcon = require('../../svg-icon');
+
+var _svgIcon2 = _interopRequireDefault(_svgIcon);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ToggleCheckBox = _react2.default.createClass({
+  displayName: 'ToggleCheckBox',
+
+  mixins: [_reactAddonsPureRenderMixin2.default],
+
+  render: function render() {
+    return _react2.default.createElement(
+      _svgIcon2.default,
+      this.props,
+      _react2.default.createElement('path', { d: 'M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z' })
+    );
+  }
+});
+
+exports.default = ToggleCheckBox;
 module.exports = exports['default'];
     })(exports,require,module);
   });
@@ -43068,6 +44111,192 @@ require.register('process/browser', function(exports,require,module) {
 	http://www.jacklmoore.com/autosize
 */
 !function(e,t){if("function"==typeof define&&define.amd)define(["exports","module"],t);else if("undefined"!=typeof exports&&"undefined"!=typeof module)t(exports,module);else{var n={exports:{}};t(n.exports,n),e.autosize=n.exports}}(this,function(e,t){"use strict";function n(e){function t(){var t=window.getComputedStyle(e,null);p=t.overflowY,"vertical"===t.resize?e.style.resize="none":"both"===t.resize&&(e.style.resize="horizontal"),c="content-box"===t.boxSizing?-(parseFloat(t.paddingTop)+parseFloat(t.paddingBottom)):parseFloat(t.borderTopWidth)+parseFloat(t.borderBottomWidth),isNaN(c)&&(c=0),i()}function n(t){var n=e.style.width;e.style.width="0px",e.offsetWidth,e.style.width=n,p=t,f&&(e.style.overflowY=t),o()}function o(){var t=window.pageYOffset,n=document.body.scrollTop,o=e.style.height;e.style.height="auto";var i=e.scrollHeight+c;return 0===e.scrollHeight?void(e.style.height=o):(e.style.height=i+"px",v=e.clientWidth,document.documentElement.scrollTop=t,void(document.body.scrollTop=n))}function i(){var t=e.style.height;o();var i=window.getComputedStyle(e,null);if(i.height!==e.style.height?"visible"!==p&&n("visible"):"hidden"!==p&&n("hidden"),t!==e.style.height){var r=d("autosize:resized");e.dispatchEvent(r)}}var s=void 0===arguments[1]?{}:arguments[1],a=s.setOverflowX,l=void 0===a?!0:a,u=s.setOverflowY,f=void 0===u?!0:u;if(e&&e.nodeName&&"TEXTAREA"===e.nodeName&&!r.has(e)){var c=null,p=null,v=e.clientWidth,h=function(){e.clientWidth!==v&&i()},y=function(t){window.removeEventListener("resize",h,!1),e.removeEventListener("input",i,!1),e.removeEventListener("keyup",i,!1),e.removeEventListener("autosize:destroy",y,!1),e.removeEventListener("autosize:update",i,!1),r["delete"](e),Object.keys(t).forEach(function(n){e.style[n]=t[n]})}.bind(e,{height:e.style.height,resize:e.style.resize,overflowY:e.style.overflowY,overflowX:e.style.overflowX,wordWrap:e.style.wordWrap});e.addEventListener("autosize:destroy",y,!1),"onpropertychange"in e&&"oninput"in e&&e.addEventListener("keyup",i,!1),window.addEventListener("resize",h,!1),e.addEventListener("input",i,!1),e.addEventListener("autosize:update",i,!1),r.add(e),l&&(e.style.overflowX="hidden",e.style.wordWrap="break-word"),t()}}function o(e){if(e&&e.nodeName&&"TEXTAREA"===e.nodeName){var t=d("autosize:destroy");e.dispatchEvent(t)}}function i(e){if(e&&e.nodeName&&"TEXTAREA"===e.nodeName){var t=d("autosize:update");e.dispatchEvent(t)}}var r="function"==typeof Set?new Set:function(){var e=[];return{has:function(t){return Boolean(e.indexOf(t)>-1)},add:function(t){e.push(t)},"delete":function(t){e.splice(e.indexOf(t),1)}}}(),d=function(e){return new Event(e)};try{new Event("test")}catch(s){d=function(e){var t=document.createEvent("Event");return t.initEvent(e,!0,!1),t}}var a=null;"undefined"==typeof window||"function"!=typeof window.getComputedStyle?(a=function(e){return e},a.destroy=function(e){return e},a.update=function(e){return e}):(a=function(e,t){return e&&Array.prototype.forEach.call(e.length?e:[e],function(e){return n(e,t)}),e},a.destroy=function(e){return e&&Array.prototype.forEach.call(e.length?e:[e],o),e},a.update=function(e){return e&&Array.prototype.forEach.call(e.length?e:[e],i),e}),t.exports=a});
+require.register("components/AddTeamModal", function(exports, require, module) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _dialog = require('material-ui/lib/dialog');
+
+var _dialog2 = _interopRequireDefault(_dialog);
+
+var _flatButton = require('material-ui/lib/flat-button');
+
+var _flatButton2 = _interopRequireDefault(_flatButton);
+
+var _textField = require('material-ui/lib/text-field');
+
+var _textField2 = _interopRequireDefault(_textField);
+
+var _list = require('material-ui/lib/lists/list');
+
+var _list2 = _interopRequireDefault(_list);
+
+var _listItem = require('material-ui/lib/lists/list-item');
+
+var _listItem2 = _interopRequireDefault(_listItem);
+
+var _avatar = require('material-ui/lib/avatar');
+
+var _avatar2 = _interopRequireDefault(_avatar);
+
+var _divider = require('material-ui/lib/divider');
+
+var _divider2 = _interopRequireDefault(_divider);
+
+var _checkbox = require('material-ui/lib/checkbox');
+
+var _checkbox2 = _interopRequireDefault(_checkbox);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var AddTeamModal = function (_React$Component) {
+  _inherits(AddTeamModal, _React$Component);
+
+  function AddTeamModal(props) {
+    _classCallCheck(this, AddTeamModal);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AddTeamModal).call(this, props));
+
+    _this.handleTeamNameChange = function (event) {
+      var input = event.target.value;
+      _this.setState({
+        teamName: input
+      }, _this.updateSubmitBtnStatus);
+    };
+
+    _this.handleCheckboxChange = function (event, checked) {
+      var targetId = event.target.value;
+      if (checked) {
+        // add user to state
+        _this.setState({
+          usersToAdd: _this.state.usersToAdd.concat([targetId])
+        }, _this.updateSubmitBtnStatus);
+      } else {
+        // remove user from state
+        var newData = _this.state.usersToAdd.slice();
+        newData.splice(newData.indexOf(targetId), 1);
+        _this.setState({
+          usersToAdd: newData
+        }, _this.updateSubmitBtnStatus);
+      }
+    };
+
+    _this.updateSubmitBtnStatus = function () {
+      var teamName = _this.state.teamName;
+      var userList = _this.state.usersToAdd;
+      _this.setState({
+        disableSubmit: teamName === ''
+      });
+    };
+
+    _this.state = {
+      anchorEl: event.currentTarget,
+      stage: 0,
+      teamName: '',
+      usersToAdd: [],
+      disableSubmit: true
+    };
+    return _this;
+  }
+
+  _createClass(AddTeamModal, [{
+    key: 'render',
+    value: function render() {
+      var actions = [_react2.default.createElement(_flatButton2.default, {
+        label: 'Cancel',
+        secondary: true,
+        onClick: this.props.onRequestClose
+      }), _react2.default.createElement(_flatButton2.default, {
+        label: 'Submit',
+        primary: true,
+        onClick: this.props.onRequestClose,
+        disabled: this.state.disableSubmit
+      })];
+      return _react2.default.createElement(
+        _dialog2.default,
+        {
+          title: this.props.title,
+          actions: actions,
+          open: this.props.open,
+          onRequestClose: this.props.onRequestClose,
+          modal: false,
+          autoScrollBodyContent: true
+        },
+        _react2.default.createElement(
+          'div',
+          { className: 'modal-step' },
+          '1. Enter a name for your new team.',
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(_textField2.default, {
+            hintText: 'ACME Corp - Marketing Department',
+            floatingLabelText: 'Team Name',
+            onChange: this.handleTeamNameChange,
+            onEnterKeyDown: this.moveForward,
+            defaultValue: this.state.teamName
+          })
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'div',
+            { className: 'modal-step' },
+            '2. (Optional) Choose who should be invited to this team. You may choose to do this later.',
+            _react2.default.createElement(_textField2.default, {
+              hintText: 'Username, Email, etc.',
+              floatingLabelText: 'Type here to search'
+            })
+          ),
+          _react2.default.createElement(
+            'div',
+            { style: { maxHeight: '420px', overflowY: 'scroll', width: '420px' } },
+            _react2.default.createElement(
+              _list2.default,
+              null,
+              _react2.default.createElement(_listItem2.default, {
+                rightToggle: _react2.default.createElement(_checkbox2.default, { value: 'Nicky_Cage_ID', onCheck: this.handleCheckboxChange }),
+                primaryText: 'Nicky Cage',
+                leftAvatar: _react2.default.createElement(_avatar2.default, { src: 'https://www.placecage.com/100/100' })
+              }),
+              _react2.default.createElement(_listItem2.default, {
+                rightToggle: _react2.default.createElement(_checkbox2.default, { value: 'Billy_Joel_ID', onCheck: this.handleCheckboxChange }),
+                primaryText: "Billy Joel",
+                leftAvatar: _react2.default.createElement(_avatar2.default, { src: 'https://www.placecage.com/102/101' })
+              }),
+              _react2.default.createElement(_listItem2.default, {
+                rightToggle: _react2.default.createElement(_checkbox2.default, { value: 'Bruce_Willis_ID', onCheck: this.handleCheckboxChange }),
+                primaryText: 'Bruce Willis',
+                leftAvatar: _react2.default.createElement(_avatar2.default, { src: 'https://www.placecage.com/100/100' })
+              })
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return AddTeamModal;
+}(_react2.default.Component);
+
+exports.default = AddTeamModal;
+
+});
+
 require.register("components/App", function(exports, require, module) {
 'use strict';
 
@@ -43835,10 +45064,6 @@ var _avatar = require('material-ui/lib/avatar');
 
 var _avatar2 = _interopRequireDefault(_avatar);
 
-var _raisedButton = require('material-ui/lib/raised-button');
-
-var _raisedButton2 = _interopRequireDefault(_raisedButton);
-
 var _personAdd = require('material-ui/lib/svg-icons/social/person-add');
 
 var _personAdd2 = _interopRequireDefault(_personAdd);
@@ -43855,6 +45080,10 @@ var _settings = require('material-ui/lib/svg-icons/action/settings');
 
 var _settings2 = _interopRequireDefault(_settings);
 
+var _raisedButton = require('material-ui/lib/raised-button');
+
+var _raisedButton2 = _interopRequireDefault(_raisedButton);
+
 var _exitToApp = require('material-ui/lib/svg-icons/action/exit-to-app');
 
 var _exitToApp2 = _interopRequireDefault(_exitToApp);
@@ -43866,8 +45095,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-// import LogoutIcon from 'material-ui/lib/svg-icons/action/power-settings-new';
-
 
 var HeaderSearch = function (_React$Component) {
   _inherits(HeaderSearch, _React$Component);
@@ -43970,9 +45197,9 @@ var HeaderSearch = function (_React$Component) {
             ),
             _react2.default.createElement(_divider2.default, null),
             _react2.default.createElement(_menuItem2.default, { primaryText: 'Invite to team', leftIcon: _react2.default.createElement(_personAdd2.default, null) }),
-            _react2.default.createElement(_menuItem2.default, { primaryText: 'Team directory', leftIcon: _react2.default.createElement(_list2.default, null) }),
-            _react2.default.createElement(_menuItem2.default, { primaryText: 'Team info', leftIcon: _react2.default.createElement(_info2.default, null) }),
-            _react2.default.createElement(_menuItem2.default, { primaryText: 'Team settings', leftIcon: _react2.default.createElement(_settings2.default, null) }),
+            _react2.default.createElement(_menuItem2.default, { primaryText: 'Team directory', leftIcon: _react2.default.createElement(_list2.default, null), disabled: true }),
+            _react2.default.createElement(_menuItem2.default, { primaryText: 'Team info', leftIcon: _react2.default.createElement(_info2.default, null), disabled: true }),
+            _react2.default.createElement(_menuItem2.default, { primaryText: 'Team settings', leftIcon: _react2.default.createElement(_settings2.default, null), disabled: true }),
             _react2.default.createElement(_divider2.default, null),
             _react2.default.createElement(
               _menuItem2.default,
@@ -43983,9 +45210,11 @@ var HeaderSearch = function (_React$Component) {
                 _react2.default.createElement(_raisedButton2.default, {
                   label: 'Logout',
                   primary: true,
-                  style: { width: '100%', height: 'auto' },
+                  style: { lineHeight: '36px' },
+                  labelStyle: { verticalAlign: 'middle' },
                   labelPosition: 'before',
-                  icon: _react2.default.createElement(_exitToApp2.default, null)
+                  icon: _react2.default.createElement(_exitToApp2.default, null),
+                  fullWidth: true
                 })
               )
             )
@@ -44035,6 +45264,26 @@ var _textField = require('material-ui/lib/text-field');
 
 var _textField2 = _interopRequireDefault(_textField);
 
+var _list = require('material-ui/lib/lists/list');
+
+var _list2 = _interopRequireDefault(_list);
+
+var _listItem = require('material-ui/lib/lists/list-item');
+
+var _listItem2 = _interopRequireDefault(_listItem);
+
+var _avatar = require('material-ui/lib/avatar');
+
+var _avatar2 = _interopRequireDefault(_avatar);
+
+var _divider = require('material-ui/lib/divider');
+
+var _divider2 = _interopRequireDefault(_divider);
+
+var _checkbox = require('material-ui/lib/checkbox');
+
+var _checkbox2 = _interopRequireDefault(_checkbox);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -44042,7 +45291,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-// import Popover from 'material-ui/lib/popover/popover';
 
 var HeaderNewConversation = function (_React$Component) {
   _inherits(HeaderNewConversation, _React$Component);
@@ -44055,12 +45303,48 @@ var HeaderNewConversation = function (_React$Component) {
     _this.handleOpen = function (event) {
       _this.setState({
         open: true,
-        anchorEl: event.currentTarget
+        anchorEl: event.currentTarget,
+        stage: 0,
+        convoName: '',
+        usersToAdd: [],
+        disableSubmit: true
       });
     };
 
     _this.handleClose = function () {
       _this.setState({ open: false });
+    };
+
+    _this.handleConvoNameChange = function (event) {
+      var input = event.target.value;
+      _this.setState({
+        convoName: input
+      }, _this.updateSubmitBtnStatus);
+    };
+
+    _this.handleCheckboxChange = function (event, checked) {
+      var targetId = event.target.value;
+      if (checked) {
+        // add user to state
+        _this.setState({
+          usersToAdd: _this.state.usersToAdd.concat([targetId])
+        }, _this.updateSubmitBtnStatus);
+      } else {
+        // remove user from state
+        var newData = _this.state.usersToAdd.slice();
+        newData.splice(newData.indexOf(targetId), 1);
+        _this.setState({
+          usersToAdd: newData
+        }, _this.updateSubmitBtnStatus);
+      }
+    };
+
+    _this.updateSubmitBtnStatus = function () {
+      var convoName = _this.state.convoName;
+      var userList = _this.state.usersToAdd;
+      _this.setState({
+        disableSubmit: !userList.length || convoName === ''
+      });
     };
 
     _this.state = {
@@ -44072,7 +45356,6 @@ var HeaderNewConversation = function (_React$Component) {
   _createClass(HeaderNewConversation, [{
     key: 'render',
     value: function render() {
-      var iconColor = 'white';
       var actions = [_react2.default.createElement(_flatButton2.default, {
         label: 'Cancel',
         secondary: true,
@@ -44080,8 +45363,8 @@ var HeaderNewConversation = function (_React$Component) {
       }), _react2.default.createElement(_flatButton2.default, {
         label: 'Submit',
         primary: true,
-        keyboardFocused: true,
-        onTouchTap: this.handleClose
+        onTouchTap: this.handleClose,
+        disabled: this.state.disableSubmit
       })];
       return _react2.default.createElement(
         'div',
@@ -44095,7 +45378,7 @@ var HeaderNewConversation = function (_React$Component) {
               onClick: this.handleOpen,
               tooltip: 'New Conversation'
             },
-            _react2.default.createElement(_questionAnswer2.default, { color: iconColor })
+            _react2.default.createElement(_questionAnswer2.default, { color: 'white' })
           )
         ),
         _react2.default.createElement(
@@ -44105,16 +45388,58 @@ var HeaderNewConversation = function (_React$Component) {
             actions: actions,
             modal: false,
             open: this.state.open,
-            onRequestClose: this.handleClose
+            onRequestClose: this.handleClose,
+            autoScrollBodyContent: true
           },
-          'Select who you would like to add to this new conversation.',
+          _react2.default.createElement(
+            'div',
+            { className: 'modal-step' },
+            '1. Enter a name for your new conversation.',
+            _react2.default.createElement('br', null),
+            _react2.default.createElement(_textField2.default, {
+              hintText: 'Sales Report, Issue #24, etc.',
+              floatingLabelText: 'Conversation Name',
+              onChange: this.handleConvoNameChange,
+              onEnterKeyDown: this.moveForward,
+              defaultValue: this.state.convoName,
+              ref: 'convoNameInput'
+            })
+          ),
           _react2.default.createElement(
             'div',
             null,
-            _react2.default.createElement(_textField2.default, {
-              hintText: 'Hint Text',
-              floatingLabelText: 'Floating Label Text'
-            })
+            _react2.default.createElement(
+              'div',
+              { className: 'modal-step' },
+              '2. Choose who should be included in this conversation.',
+              _react2.default.createElement(_textField2.default, {
+                hintText: 'Username, Email, etc.',
+                floatingLabelText: 'Type here to search'
+              })
+            ),
+            _react2.default.createElement(
+              'div',
+              { style: { maxHeight: '420px', overflowY: 'scroll', width: '420px' } },
+              _react2.default.createElement(
+                _list2.default,
+                null,
+                _react2.default.createElement(_listItem2.default, {
+                  rightToggle: _react2.default.createElement(_checkbox2.default, { value: 'Nicky_Cage_ID', onCheck: this.handleCheckboxChange }),
+                  primaryText: 'Nicky Cage',
+                  leftAvatar: _react2.default.createElement(_avatar2.default, { src: 'https://www.placecage.com/100/100' })
+                }),
+                _react2.default.createElement(_listItem2.default, {
+                  rightToggle: _react2.default.createElement(_checkbox2.default, { value: 'Billy_Joel_ID', onCheck: this.handleCheckboxChange }),
+                  primaryText: "Billy Joel",
+                  leftAvatar: _react2.default.createElement(_avatar2.default, { src: 'https://www.placecage.com/102/101' })
+                }),
+                _react2.default.createElement(_listItem2.default, {
+                  rightToggle: _react2.default.createElement(_checkbox2.default, { value: 'Bruce_Willis_ID', onCheck: this.handleCheckboxChange }),
+                  primaryText: 'Bruce Willis',
+                  leftAvatar: _react2.default.createElement(_avatar2.default, { src: 'https://www.placecage.com/100/100' })
+                })
+              )
+            )
           )
         )
       );
@@ -44123,18 +45448,6 @@ var HeaderNewConversation = function (_React$Component) {
 
   return HeaderNewConversation;
 }(_react2.default.Component);
-
-// <Popover
-//   open={this.state.open}
-//   anchorEl={this.state.anchorEl}
-//   anchorOrigin={{horizontal: 'middle', vertical: 'bottom'}}
-//   targetOrigin={{horizontal: 'middle', vertical: 'top'}}
-//   useLayerForClickAway={false}
-//   onRequestClose={this.handleClose}
-// >
-//   <h1>New Convo Stuff Here</h1>
-// </Popover>
-
 
 exports.default = HeaderNewConversation;
 
@@ -44164,6 +45477,22 @@ var _notifications2 = _interopRequireDefault(_notifications);
 var _popover = require('material-ui/lib/popover/popover');
 
 var _popover2 = _interopRequireDefault(_popover);
+
+var _avatar = require('material-ui/lib/avatar');
+
+var _avatar2 = _interopRequireDefault(_avatar);
+
+var _list = require('material-ui/lib/lists/list');
+
+var _list2 = _interopRequireDefault(_list);
+
+var _listItem = require('material-ui/lib/lists/list-item');
+
+var _listItem2 = _interopRequireDefault(_listItem);
+
+var _divider = require('material-ui/lib/divider');
+
+var _divider2 = _interopRequireDefault(_divider);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -44228,9 +45557,104 @@ var HeaderNotifications = function (_React$Component) {
             onRequestClose: this.handleClose
           },
           _react2.default.createElement(
-            'h1',
-            null,
-            'Notifications here'
+            'div',
+            { style: { maxHeight: '480px' } },
+            _react2.default.createElement(
+              _list2.default,
+              { subheader: 'Today' },
+              _react2.default.createElement(_divider2.default, null),
+              _react2.default.createElement(_listItem2.default, {
+                primaryText: 'Q4 Sales Report',
+                secondaryText: _react2.default.createElement(
+                  'span',
+                  null,
+                  _react2.default.createElement(
+                    'span',
+                    { style: { color: '#00bcd4' } },
+                    'Brendan Lim'
+                  ),
+                  ' has mentioned you.'
+                ),
+                leftAvatar: _react2.default.createElement(_avatar2.default, { src: 'https://www.placecage.com/100/100' })
+              }),
+              _react2.default.createElement(_divider2.default, null),
+              _react2.default.createElement(_listItem2.default, {
+                primaryText: 'Q4 Sales Report',
+                secondaryText: _react2.default.createElement(
+                  'span',
+                  null,
+                  _react2.default.createElement(
+                    'span',
+                    { style: { color: '#00bcd4' } },
+                    'Brendan Lim'
+                  ),
+                  ' has replied to the thread.'
+                ),
+                leftAvatar: _react2.default.createElement(_avatar2.default, { src: 'https://www.placecage.com/100/100' })
+              }),
+              _react2.default.createElement(_divider2.default, null),
+              _react2.default.createElement(_listItem2.default, {
+                primaryText: 'Lunch?',
+                secondaryText: _react2.default.createElement(
+                  'span',
+                  null,
+                  _react2.default.createElement(
+                    'span',
+                    { style: { color: '#00bcd4' } },
+                    'Eric Hoffman'
+                  ),
+                  ' and ',
+                  _react2.default.createElement(
+                    'span',
+                    { style: { color: '#00bcd4' } },
+                    '2 others'
+                  ),
+                  ' has replied to the thread.'
+                ),
+                leftAvatar: _react2.default.createElement(_avatar2.default, { src: 'https://www.placecage.com/100/101' })
+              }),
+              _react2.default.createElement(_divider2.default, null)
+            ),
+            _react2.default.createElement(
+              _list2.default,
+              { subheader: 'Yesterday' },
+              _react2.default.createElement(_divider2.default, null),
+              _react2.default.createElement(_listItem2.default, {
+                primaryText: 'New Hire: Bill',
+                secondaryText: _react2.default.createElement(
+                  'span',
+                  null,
+                  _react2.default.createElement(
+                    'span',
+                    { style: { color: '#00bcd4' } },
+                    'Nicky Cage'
+                  ),
+                  ' has replied to the thread.'
+                ),
+                leftAvatar: _react2.default.createElement(_avatar2.default, { src: 'https://www.placecage.com/101/101' })
+              }),
+              _react2.default.createElement(_divider2.default, null),
+              _react2.default.createElement(_listItem2.default, {
+                primaryText: 'Christmas Party',
+                secondaryText: _react2.default.createElement(
+                  'span',
+                  null,
+                  _react2.default.createElement(
+                    'span',
+                    { style: { color: '#00bcd4' } },
+                    'Nicky Cage'
+                  ),
+                  ' and ',
+                  _react2.default.createElement(
+                    'span',
+                    { style: { color: '#00bcd4' } },
+                    '2 others'
+                  ),
+                  ' has replied to the thread.'
+                ),
+                leftAvatar: _react2.default.createElement(_avatar2.default, { src: 'https://www.placecage.com/100/100' })
+              })
+            )
           )
         )
       );
@@ -44929,6 +46353,10 @@ var _flatButton = require('material-ui/lib/flat-button');
 
 var _flatButton2 = _interopRequireDefault(_flatButton);
 
+var _AddTeamModal = require('./AddTeamModal');
+
+var _AddTeamModal2 = _interopRequireDefault(_AddTeamModal);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -45055,16 +46483,11 @@ var Teams = function (_React$Component) {
             'settings'
           )
         ),
-        _react2.default.createElement(
-          _dialog2.default,
-          {
-            title: 'Add Team',
-            actions: actions,
-            open: this.state.addTeamDialogOpen,
-            onRequestClose: this.handleClose
-          },
-          'Ask user if they want to join an existing team or create a new one.'
-        )
+        _react2.default.createElement(_AddTeamModal2.default, {
+          title: 'Add Team',
+          open: this.state.addTeamDialogOpen,
+          onRequestClose: this.handleClose
+        })
       );
     }
   }]);
