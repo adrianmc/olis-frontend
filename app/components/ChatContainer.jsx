@@ -10,6 +10,8 @@ import Avatar from 'material-ui/lib/avatar';
 import TextField from 'material-ui/lib/text-field';
 import ChatMessageItem from './ChatMessageItem';
 
+import $ from 'jquery';
+
 export default class ChatContainer extends React.Component {
 
   handleEnterKeyDown = (e) => {
@@ -19,6 +21,11 @@ export default class ChatContainer extends React.Component {
       // e.preventDefault();
       console.log('SUBMIT')
     }
+  }
+
+  scrollToBottom = () => {
+    const ele = $(this._container);
+    ele.animate({ scrollTop: ele.prop("scrollHeight")}, 500);
   }
 
   render() {
@@ -46,7 +53,8 @@ export default class ChatContainer extends React.Component {
           </div>
         </div>
 
-        <div id="chat-msg-area">
+        <div id="chat-msg-area" ref={(x) => this._container = x}>
+          <button onClick={this.scrollToBottom}>Scroll to bottom</button>
           <ChatMessageItem
             authorName='Nicky Cage'
             avatarSrc='http://www.placecage.com/200/200'
