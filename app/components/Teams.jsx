@@ -47,19 +47,6 @@ export default class Teams extends React.Component {
       transform: 'translate(-50%,-50%)',
     };
 
-    const actions = [
-      <FlatButton
-        label="Cancel"
-        secondary={true}
-        onTouchTap={this.handleClose}
-      />,
-      <FlatButton
-        label="Submit"
-        primary={true}
-        disabled={true}
-        onTouchTap={this.handleClose}
-      />,
-    ];
     return (
       <div id="team-list-wrapper">
 

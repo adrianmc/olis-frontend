@@ -18,6 +18,8 @@ import MembersIcon from 'material-ui/lib/svg-icons/social/group';
 import ConvosIcon from 'material-ui/lib/svg-icons/action/question-answer';
 import TimeIcon from 'material-ui/lib/svg-icons/device/access-time';
 
+import PageWrapper from './PageWrapper';
+
 export default class ManageTeams extends React.Component {
   
   handleTeamSettingsClick = (teamId, event) => {
@@ -57,17 +59,13 @@ export default class ManageTeams extends React.Component {
     });
 
     return (
-      <div id="manage-teams-wrapper">
+      <PageWrapper
+        title="Manage Teams"
+        description="Manage the teams that you are a part of."
+        backButton
+        showDescription
+      >
         <div>
-          <p>
-            <FlatButton
-              label="Back to Chat"
-              secondary={true}
-              icon={<BackIcon />}
-            />
-          </p>
-          <h1>Manage Teams</h1>
-          <p>Manage the teams that you are a part of.</p>
           <Table
             selectable={false}
           >
@@ -127,7 +125,7 @@ export default class ManageTeams extends React.Component {
             </TableBody>
           </Table>
         </div>
-      </div>
+      </PageWrapper>
     );
   }
 }
@@ -137,5 +135,6 @@ ManageTeams.defaultProps = {
     {id: 'team_a_UUID', name: 'Alpha Company', members: 3, conversations: 21, lastUpdated: 1456394486},
     {id: 'team_b_UUID', name: 'Beta Bunch', members: 13, conversations: 121, lastUpdated: 1456384486},
     {id: 'team_c_UUID', name: 'Charlie Corporation', members: 1, conversations: 12, lastUpdated: 1456394386},
+    
   ],
 };
