@@ -5,6 +5,8 @@ import TeamIcon from './TeamIcon';
 import Dialog from 'material-ui/lib/dialog';
 import FlatButton from 'material-ui/lib/flat-button';
 
+import AddTeamModal from './AddTeamModal';
+
 export default class Teams extends React.Component {
   
   constructor(props) {
@@ -118,14 +120,11 @@ export default class Teams extends React.Component {
         </div>
 
         {/* Add Team Dialog/Modal */}
-        <Dialog
+        <AddTeamModal
           title="Add Team"
-          actions={actions}
           open={this.state.addTeamDialogOpen}
-          onRequestClose={this.handleClose}
-        >
-          Ask user if they want to join an existing team or create a new one.
-        </Dialog>
+          onRequestClose={this.handleClose}    
+        />
       </div>
     );
   }
