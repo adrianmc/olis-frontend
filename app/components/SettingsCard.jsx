@@ -9,28 +9,53 @@ import FlatButton from 'material-ui/lib/flat-button';
 import RaisedButton from 'material-ui/lib/raised-button';
 
 export default class SettingsCard extends React.Component {
+
+  actions = () => {
+    const {
+      resetButtonText,
+      handleReset,
+      submitButtonText,
+      handleSubmit,
+      disableReset,
+      disableSubmit,
+      actionText,
+    } = this.props;
+    return (
+      <div>
+        { disableReset ? null :
+          <FlatButton 
+            label={ resetButtonText }
+            onClick={ handleReset }
+          />
+        }
+        { disableSubmit ? null :
+          <RaisedButton 
+            label={ submitButtonText }
+            secondary={true}
+            onClick={ handleSubmit }
+          />
+        }
+        { actionText != '' ?
+            <div>{ actionText }</div>
+          :
+            null
+        }
+      </div>
+    );
+  }
   
   render() {
     
     const {
       title,
       subtitle,
-      resetButtonText,
-      submitButtonText,
-      handleReset,
-      handleSubmit,
       style,
       children,
     } = this.props;
 
     const defaultStyle = {marginBottom:'25px'};
-
     const cardStyle = style ? Object.assign(defaultStyle, style) : defaultStyle;
-
     const cardTextStyle = {
-      // background: "url(http://subtlepatterns2015.subtlepatterns.netdna-cdn.com/patterns/cubes.png)",
-      // background: "url('http://subtlepatterns2015.subtlepatterns.netdna-cdn.com/patterns/geometry.png')",
-      // background: 'white',
       borderTop:'1px solid rgba(0,0,0,0.05)',
       borderBottom:'1px solid rgba(0,0,0,0.05)',
     };
@@ -47,15 +72,7 @@ export default class SettingsCard extends React.Component {
           { children }
         </CardText>
         <CardActions expandable={true}>
-          <FlatButton 
-            label={ resetButtonText }
-            onClick={ handleReset }
-          />
-          <RaisedButton 
-            label={ submitButtonText }
-            secondary={true}
-            onClick={ handleSubmit }
-          />
+          { this.actions() }
         </CardActions>
       </Card>
     );
@@ -70,4 +87,7 @@ SettingsCard.defaultProps = {
   submitButtonText: "Submit",
   handleReset: function(){console.log('handleReset')},
   handleSubmit: function(){console.log('handleSubmit')},
+  disableReset: false,
+  disableSubmit: false,
+  actionText: '',
 }

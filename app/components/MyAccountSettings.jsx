@@ -1,26 +1,13 @@
 import React from 'react';
 
-import Card from 'material-ui/lib/card/card';
-import CardActions from 'material-ui/lib/card/card-actions';
-import CardHeader from 'material-ui/lib/card/card-header';
-import CardText from 'material-ui/lib/card/card-text';
-
-import FlatButton from 'material-ui/lib/flat-button';
-import RaisedButton from 'material-ui/lib/raised-button';
-
+import SettingsCard from './SettingsCard';
 import TextField from 'material-ui/lib/text-field';
 
-import SettingsCard from './SettingsCard';
+import TranslationSettings from './TranslationSettings';
 
 export default class MyAccountSettings extends React.Component {
   
   render() {
-    const cardTextStyle = {
-      background: "url(http://subtlepatterns2015.subtlepatterns.netdna-cdn.com/patterns/cubes.png)",
-      // background: '#f0f0f9',
-      borderTop:'1px solid rgba(0,0,0,0.05)',
-      borderBottom:'1px solid rgba(0,0,0,0.05)',
-    };
     return (
       <div>
 
@@ -72,20 +59,7 @@ export default class MyAccountSettings extends React.Component {
           />
         </SettingsCard>
 
-        <SettingsCard
-          title="Change Timezone"
-          subtitle="Set a custom timezone or let us detect your system settings."
-        >
-          Have a checkbox for "Automatically detect system time", and when you uncheck it, it will enable the select box for you to choose a custom timezone.
-        </SettingsCard>
-
-        <SettingsCard
-          title="Change Translation Language"
-          subtitle="Choose the default language to translate into."
-          style={{marginBottom: 'none'}}
-        >
-          Here, put a select box with all of the supported translation languages.
-        </SettingsCard>
+        <TranslationSettings />
 
       </div>
     );

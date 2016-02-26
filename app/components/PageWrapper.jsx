@@ -12,6 +12,7 @@ export default class PageWrapper extends React.Component {
       title,
       backButton,
       backButtonLabel,
+      handleBackButtonPress,
       showDescription,
       lightDescription,
       description,
@@ -44,9 +45,10 @@ export default class PageWrapper extends React.Component {
             {
               backButton ? 
               <FlatButton
-                label={this.props.backButtonLabel}
-                secondary={true}
-                icon={<BackIcon />}
+                onClick={ handleBackButtonPress }
+                label={ backButtonLabel }
+                secondary={ true }
+                icon={ <BackIcon /> }
               />
               :
               null
@@ -58,8 +60,8 @@ export default class PageWrapper extends React.Component {
 
             {
               showDescription ?
-              <div style={descriptionStyle}>
-                { this.props.description }
+              <div style={ descriptionStyle }>
+                { description }
               </div>
               :
               null
@@ -80,6 +82,7 @@ PageWrapper.defaultProps = {
   title: "My Title",
   backButton: false,
   backButtonLabel: "Back to Chat",
+  handleBackButtonPress: function(){console.log('handleBackButtonPress')},
   showDescription: false,
   lightDescription: true,
   description: "This is where you can describe the purpose of this page.",
