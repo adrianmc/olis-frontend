@@ -18,18 +18,19 @@ export default class PageWrapper extends React.Component {
       children,
     } = this.props;
 
-    const backgroundColor = "#efefef"
+    const backgroundColor = "url('http://subtlepatterns2015.subtlepatterns.netdna-cdn.com/patterns/geometry.png')";
+    const neutralColor = "#efefef"
     const highlightColor = "#9e9e9e";
 
     const descriptionStyle = {
       margin:'25px -25px',
       padding:'25px',
       color: lightDescription ? highlightColor : "white",
-      background: lightDescription ? backgroundColor : highlightColor,
+      background: lightDescription ? neutralColor : highlightColor,
     }
     
     return (
-      <div style={{height:'100%',overflow:'auto'}}>
+      <div style={{height:'100%',overflow:'auto',background:backgroundColor}}>
         <div style={{
           width: '920px',
           minHeight: '100%',

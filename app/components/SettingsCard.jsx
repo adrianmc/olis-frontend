@@ -28,7 +28,9 @@ export default class SettingsCard extends React.Component {
     const cardStyle = style ? Object.assign(defaultStyle, style) : defaultStyle;
 
     const cardTextStyle = {
-      background: "url(http://subtlepatterns2015.subtlepatterns.netdna-cdn.com/patterns/cubes.png)",
+      // background: "url(http://subtlepatterns2015.subtlepatterns.netdna-cdn.com/patterns/cubes.png)",
+      // background: "url('http://subtlepatterns2015.subtlepatterns.netdna-cdn.com/patterns/geometry.png')",
+      // background: 'white',
       borderTop:'1px solid rgba(0,0,0,0.05)',
       borderBottom:'1px solid rgba(0,0,0,0.05)',
     };

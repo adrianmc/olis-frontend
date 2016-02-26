@@ -9,7 +9,7 @@ export default class App extends React.Component {
     injectTapEventPlugin();
     return (
       <div id="content">
-        <MyAccount />
+        <ManageTeams />
       </div>
     );
   }

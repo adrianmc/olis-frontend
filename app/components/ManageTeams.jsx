@@ -38,6 +38,7 @@ export default class ManageTeams extends React.Component {
           <TableRowColumn style={{width:'72px'}}>
             <IconButton
               onClick={this.handleTeamSettingsClick.bind(this, team.id)}
+              style={{transform:'scale(0.7)'}}
               team="tester"
             >
               <SettingsIcon />
@@ -45,7 +46,7 @@ export default class ManageTeams extends React.Component {
           </TableRowColumn>
           <TableRowColumn>
             <div
-              style={{fontWeight:'700',fontSize:'16px',cursor:'pointer'}}
+              style={{fontWeight:'700',fontSize:'16px',cursor:'pointer',color:'#00BCD4'}}
               onClick={this.handleTeamNameClick.bind(this, team.id)}
             >
               {team.name}
@@ -63,6 +64,7 @@ export default class ManageTeams extends React.Component {
         title="Manage Teams"
         description="Manage the teams that you are a part of."
         backButton
+        lightDescription
         showDescription
       >
         <div>
@@ -84,7 +86,6 @@ export default class ManageTeams extends React.Component {
                   <div className="table-header-wrapper">
                     <div className="table-header-div">
                       <NameIcon color="#9E9E9E"/>
-                      <div>Team Name</div>
                     </div>
                   </div>
                 </TableHeaderColumn>
@@ -92,8 +93,6 @@ export default class ManageTeams extends React.Component {
                   <div className="table-header-wrapper">
                     <div className="table-header-div">
                       <MembersIcon color="#9E9E9E"/>
-                      <br />
-                      Members
                     </div>
                   </div>
                 </TableHeaderColumn>
@@ -101,8 +100,6 @@ export default class ManageTeams extends React.Component {
                   <div className="table-header-wrapper">
                     <div className="table-header-div">
                       <ConvosIcon color="#9E9E9E"/>
-                      <br />
-                      Conversations
                     </div>
                   </div>
                 </TableHeaderColumn>
@@ -110,8 +107,6 @@ export default class ManageTeams extends React.Component {
                   <div className="table-header-wrapper">
                     <div className="table-header-div">
                       <TimeIcon color="#9E9E9E"/>
-                      <br />
-                      Last Updated
                     </div>
                   </div>
                 </TableHeaderColumn>
