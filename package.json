@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "jquery": "^2.2.1",
+    "rc-steps": "^1.4.3",
     "react": "~0.14.7",
     "react-dom": "~0.14.7",
     "react-markdown": "^2.0.1",

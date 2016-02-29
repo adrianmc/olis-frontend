@@ -23,6 +23,11 @@ export default class ChatContainer extends React.Component {
     }
   }
 
+  handleScroll = () => {
+    const ele = $(this._container);
+    console.log(ele.scrollTop());
+  }
+
   scrollToBottom = () => {
     const ele = $(this._container);
     ele.animate({ scrollTop: ele.prop("scrollHeight")}, 500);
@@ -53,7 +58,7 @@ export default class ChatContainer extends React.Component {
           </div>
         </div>
 
-        <div id="chat-msg-area" ref={(x) => this._container = x}>
+        <div id="chat-msg-area" ref={(x) => this._container = x} onScroll={this.handleScroll}>
           <button onClick={this.scrollToBottom}>Scroll to bottom</button>
           <ChatMessageItem
             authorName='Nicky Cage'

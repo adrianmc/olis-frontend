@@ -77,7 +77,9 @@ export default class ChatMessageItem extends React.Component {
         <MenuItem primaryText="Lorem Ipsum" />
       </IconMenu>
     );
-
+    
+    const hasTranslation = false;
+    
     return (
       <div 
         className={'chat-msg-item' + authorClass}
@@ -93,6 +95,14 @@ export default class ChatMessageItem extends React.Component {
             <div className="chat-bubble">
               <p>{content}</p>
               {/*<ReactMarkdown source='# This is a header\n\nAnd this is a paragraph' softBreak="br" escapeHtml />*/}
+              {
+                hasTranslation ? 
+                <div style={{opacity: '0.5', marginTop:'8px'}}>
+                  <hr/>
+                  {content}
+                </div>
+                : null
+              }
             </div>
             <div className="chat-timestamp">{timestamp}</div>
           </div>

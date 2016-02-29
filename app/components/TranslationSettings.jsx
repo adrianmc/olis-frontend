@@ -12,13 +12,9 @@ export default class MyAccountSettings extends React.Component {
     this.state = {value: "English"};
   }
 
-  handleReset = () => this.setState({value: "English"});
-
-  handleChange = (event, index, value) => this.setState({value});
-
-  handleSubmit = () => {
-    const targetLanguage = this.state.value;
-    console.log(`Change language to ${targetLanguage}`);
+  handleChange = (event, index, value) => {
+    this.setState({value});
+    console.log(`Change default translation language to ${value}`);
   }
 
   render() {
@@ -33,9 +29,9 @@ export default class MyAccountSettings extends React.Component {
         handleSubmit={this.handleSubmit}
         disableReset
         disableSubmit
-        actionText="This setting is updated on change."
+        actionText="This setting is updated automatically when changed."
       >
-        <p>Select one of the following languages:</p>
+        <p>Select one of the following languages that you understand best:</p>
         <SelectField value={this.state.value} onChange={this.handleChange}>
           <MenuItem value="English" primaryText="English"/>
           <MenuItem value="French" primaryText="French"/>

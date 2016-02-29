@@ -20,6 +20,14 @@ export default class SettingsCard extends React.Component {
       disableSubmit,
       actionText,
     } = this.props;
+
+    const textStyle = {
+      color: 'rgba(0, 0, 0, 0.54)',
+      fontSize: '14px',
+      fontStyle: 'italic',
+      marginLeft: '8px',
+    }
+
     return (
       <div>
         { disableReset ? null :
@@ -35,11 +43,7 @@ export default class SettingsCard extends React.Component {
             onClick={ handleSubmit }
           />
         }
-        { actionText != '' ?
-            <div>{ actionText }</div>
-          :
-            null
-        }
+        { actionText != '' ? <div style={textStyle}>{ actionText }</div> : null }
       </div>
     );
   }
