@@ -17,6 +17,7 @@ export default class CreateAccountEmail extends React.Component {
         width="420px"
       >
         <TextField
+          type="email"
           hintText="your.name@example.com"
           floatingLabelText="Email"
           fullWidth

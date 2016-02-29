@@ -9,13 +9,14 @@ import Create3 from './onboarding/CreateAccountEmail';
 import Create4 from './onboarding/CreateAccountInviteTeammates';
 import Login from './Login';
 import SetPassword from './onboarding/SetPassword';
+import FindMyTeam from './onboarding/FindMyTeam';
 
 export default class App extends React.Component {
   render() {
     injectTapEventPlugin();
     return (
       <div id="content">
-        <SetPassword />
+        <FindMyTeam />
       </div>
     );
   }
