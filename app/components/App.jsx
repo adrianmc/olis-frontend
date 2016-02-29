@@ -10,13 +10,14 @@ import Create4 from './onboarding/CreateAccountInviteTeammates';
 import Login from './Login';
 import SetPassword from './onboarding/SetPassword';
 import FindMyTeam from './onboarding/FindMyTeam';
+import TeamSettings from './TeamSettings';
 
 export default class App extends React.Component {
   render() {
     injectTapEventPlugin();
     return (
       <div id="content">
-        <FindMyTeam />
+        <TeamSettings />
       </div>
     );
   }

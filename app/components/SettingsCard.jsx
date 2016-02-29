@@ -54,6 +54,7 @@ export default class SettingsCard extends React.Component {
       title,
       subtitle,
       style,
+      initiallyExpanded,
       children,
     } = this.props;
 
@@ -65,7 +66,7 @@ export default class SettingsCard extends React.Component {
     };
 
     return (
-      <Card style={cardStyle}>
+      <Card style={cardStyle} initiallyExpanded={initiallyExpanded}>
         <CardHeader
           title={ title }
           subtitle={ subtitle }
@@ -94,4 +95,5 @@ SettingsCard.defaultProps = {
   disableReset: false,
   disableSubmit: false,
   actionText: '',
+  initiallyExpanded: false,
 }
