@@ -21,12 +21,12 @@ export default class CreateAccountUsername extends React.Component {
           floatingLabelText="Username"
           fullWidth
         />
-        <p>
+        <div style={{margin:'14px 0'}}>
           <RaisedButton
             label="Next Step"
             secondary={true}
           />
-        </p>
+        </div>
       </PageWrapper>
     );
   }

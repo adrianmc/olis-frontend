@@ -46,12 +46,12 @@ export default class CreateAccountInviteTeammates extends React.Component {
 
         <p style={{opacity:'0.5'}}><em>This step is optional, you can always do this later.</em></p>
 
-        <p>
+        <div style={{margin:'14px 0'}}>
           <RaisedButton
             label="Finish"
             primary={true}
           />
-        </p>
+        </div>
       </PageWrapper>
     );
   }

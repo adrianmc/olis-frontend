@@ -7,14 +7,14 @@ import Create1 from './onboarding/CreateAccountTeamName';
 import Create2 from './onboarding/CreateAccountUsername';
 import Create3 from './onboarding/CreateAccountEmail';
 import Create4 from './onboarding/CreateAccountInviteTeammates';
-// import Create5 from './onboarding/CreateAccountConfirm';
+import Login from './Login';
 
 export default class App extends React.Component {
   render() {
     injectTapEventPlugin();
     return (
       <div id="content">
-        <Create4/>
+        <Login />
       </div>
     );
   }

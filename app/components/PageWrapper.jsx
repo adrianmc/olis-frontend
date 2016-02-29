@@ -11,6 +11,7 @@ export default class PageWrapper extends React.Component {
     const {
       title,
       subtitle,
+      hideTitle,
       backButton,
       backButtonLabel,
       handleBackButtonPress,
@@ -73,9 +74,14 @@ export default class PageWrapper extends React.Component {
               null
             }
 
-            <div style={{color:'#9e9e9e'}}>
-              <h1>{ title }</h1>
-            </div>
+            {
+              hideTitle ?
+                null
+              :
+                <div style={{color:'#9e9e9e'}}>
+                  <h1>{ title }</h1>
+                </div>
+            }
 
             { subtitle }
 
@@ -101,6 +107,7 @@ export default class PageWrapper extends React.Component {
 
 PageWrapper.defaultProps = {
   title: "My Title",
+  hideTitle: false,
   subtitle: null,
   backButton: false,
   backButtonLabel: "Back to Chat",
