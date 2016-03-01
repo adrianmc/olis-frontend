@@ -32,7 +32,11 @@ export default class Permissions extends React.Component {
         role,
       } = user;
       return (
-        <TableRow key={id}>
+        <TableRow
+          key={id}
+          displayBorder={false}
+          style={{lineHeight:"64px"}}
+        >
             <TableRowColumn style={{width:'72px'}}>
               <Avatar style={{verticalAlign:'inherit'}} src={ avatarSrc } />
             </TableRowColumn>
@@ -56,8 +60,8 @@ export default class Permissions extends React.Component {
             displaySelectAll={false}
           >
             <TableRow>
-              <TableHeaderColumn style={{width:'72px'}}>Avatar</TableHeaderColumn>
-              <TableHeaderColumn>Username</TableHeaderColumn>
+              <TableHeaderColumn style={{width:'72px'}}></TableHeaderColumn>
+              <TableHeaderColumn>User</TableHeaderColumn>
               <TableHeaderColumn>Role</TableHeaderColumn>
             </TableRow>
           </TableHeader>
